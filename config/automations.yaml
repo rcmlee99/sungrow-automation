@@ -1,0 +1,127 @@
+- id: "1693724381264"
+  alias: SG 5am Morning charge
+  description: ""
+  trigger:
+    - platform: time
+      at: 05:00:00
+  condition: []
+  action:
+    - service: input_number.set_value
+      data:
+        value: 500
+      target:
+        entity_id: input_number.set_sg_battery_max_charge_power
+  mode: single
+
+- id: "1694813024230"
+  alias: SG 7am battery charging
+  description: ""
+  trigger:
+    - platform: time
+      at: 07:00:00
+  condition: []
+  action:
+    - service: input_number.set_value
+      data:
+        value: 500
+      target:
+        entity_id: input_number.set_sg_battery_max_charge_power
+  mode: single
+
+- id: "1694555362081"
+  alias: SG 9am charge battery
+  description: ""
+  trigger:
+    - platform: time
+      at: 09:30:00
+  condition: []
+  action:
+    - service: input_number.set_value
+      data:
+        value: 1500
+      target:
+        entity_id: input_number.set_sg_battery_max_charge_power
+  mode: single
+
+- id: "1694579954921"
+  alias: SG 10am charge battery
+  description: ""
+  trigger:
+    - platform: time
+      at: "10:00:00"
+  condition: []
+  action:
+    - service: input_number.set_value
+      data:
+        value: 2500
+      target:
+        entity_id: input_number.set_sg_battery_max_charge_power
+  mode: single
+
+- id: "1693724770703"
+  alias: SG 11Am Battery charge
+  description: ""
+  trigger:
+    - platform: time
+      at: "11:00:00"
+  condition: []
+  action:
+    - service: input_number.set_value
+      data:
+        value: 1500
+      target:
+        entity_id: input_number.set_sg_battery_max_charge_power
+  mode: single
+
+- id: "1695549306361"
+  alias: Battery Discharge Power
+  description: Battery discharge W
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.battery_discharging_power
+      above: 1500
+    - platform: time
+      at: "22:39:00"
+  condition: []
+  action:
+    - service: notify.mobile_app_zee97
+      data:
+        message: Power {{ states('sensor.battery_discharging_power') }} W
+        title: Battery discharge
+    - service: script.notify_slack
+      data: {}
+      enabled: false
+  mode: single
+
+- id: "1695550909886"
+  alias: Notify Export Power
+  description: Export Power
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.export_power
+      above: 5000
+  condition: []
+  action:
+    - service: notify.mobile_app_zee97
+      data:
+        message: Power {{ states('sensor.export_power') }} W
+        title: Export Power
+  mode: single
+
+- id: "1696143665579"
+  alias: Webhook Battlimit
+  description: ""
+  trigger:
+    - platform: webhook
+      allowed_methods:
+        - POST
+      local_only: true
+      webhook_id: battlimit
+  condition: []
+  action:
+    - service: input_number.set_value
+      data:
+        value: "{{ trigger.json.value }}"
+      target:
+        entity_id: input_number.set_sg_battery_max_charge_power
+  mode: single
