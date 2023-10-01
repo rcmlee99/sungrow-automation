@@ -1,4 +1,7 @@
-This repository contains collections of Sungrow Solar and Battery Automation using Home Assistant modbus protocol and Iphone Shortcuts
+This repository contains collections of Sungrow Solar and Battery Automation (Step Charging) using Home Assistant modbus protocol and Iphone Shortcuts.
+
+![SungrowOverview](images/IMG_6535.PNG)
+![StepCharging](images/IMG_6533.PNG)
 
 # Prerequisite
 
@@ -20,12 +23,12 @@ In your HA, goto Settings -> Add On Store. Search for Studio Code Server and cho
 
 ## Modbus Protocol
 
-Follow the instructions in github repository https://github.com/mkaiser/Sungrow-SHx-Inverter-Modbus-Home-Assistant/blob/main/doc/installation.md, copy the the following two files in the correct folder
+Follow the instructions in github repository https://github.com/mkaiser/Sungrow-SHx-Inverter-Modbus-Home-Assistant/blob/main/doc/installation.md, copy the the following two files in the correct folder.
 
 1. modbus_sungrow.yaml
 2. secrets.yaml
 
-Modify the configuration.yaml and add these two lines
+Modify the configuration.yaml and add these two lines :
 
 ```jsx
 homeassistant:
@@ -36,7 +39,9 @@ homeassistant:
 
 To create new automation triggers, goto Settings -> Automations & Scenes then click Create Automation. On the top right corner, click on the 3 dots and select edit in YAML.
 
-Some of the automations scripts I am running. Copy and paste into editor. Change the data value and triggers as needed
+![EditInYaml](images/IMG_6544.PNG)
+
+Some of the automations scripts I am running. Copy and paste into editor. Change the data value and triggers as needed.
 
 ## Battery Limit Charging
 
@@ -120,13 +125,21 @@ alias: Webhook Battlimit
 
 ```
 
-In Iphone Shortcuts, create a new actions `Get contents of URL` add the following information
+In Iphone Shortcuts, create a new actions `Get contents of URL` add the following information :
 
-1. URL: http://Y.Y.Y.Y:8123/api/battlimit (Y.Y.Y.Y is your external IP address)
+1. URL: http://Y.Y.Y.Y:8123/api/battlimit (Y.Y.Y.Y is your external IP address). You need to configure HA remote access and port forwarding on your router. See https://www.home-assistant.io/docs/configuration/remote/ and https://community.home-assistant.io/t/home-assistant-remote-access-port-forwarding-on-nest-wifi/300512
+
+
 2. Method: POST
-3. Authorization: Bearer `Your Long-Lived Access Tokens from Profile`
+3. Authorization: Bearer `Your Long-Lived Access Tokens from Profile`. See https://community.home-assistant.io/t/how-to-get-long-lived-access-token/162159
+
 4. Request Body: JSON
 5. value: `power limit in W`
+
+![IosShortcut1](images/IMG_6547.PNG)
+![IosShortcut2](images/IMG_6546.PNG)
+![IosShortcut3](images/IMG_6545.PNG)
+![IosShortcut4](images/IMG_6549.PNG)
 
 # Current home assistant configuration
 
