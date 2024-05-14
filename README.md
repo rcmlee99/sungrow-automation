@@ -1,7 +1,13 @@
 This repository contains collections of Sungrow Solar and Battery Automation (Step Charging) using Home Assistant modbus protocol and Iphone Shortcuts.
 
+
 ![SungrowOverview](images/IMG_6535.PNG)
-![StepCharging](images/IMG_6533.PNG)
+
+# Step Charging by using Battery Charging Limit
+![StepCharging](images/IMG_9144.PNG)
+
+# Force Charging and Discharging
+![ForceDischarging](images/IMG_9145.PNG)
 
 # Prerequisite
 
@@ -41,7 +47,8 @@ To create new automation triggers, goto Settings -> Automations & Scenes then cl
 
 ![EditInYaml](images/IMG_6544.PNG)
 
-Some of the automations scripts I am running. Copy and paste into editor. Change the data value and triggers as needed.
+Below are some of the automations scripts I am running. 
+Copy and paste into editor. Change the data value and triggers as needed.
 
 ## Battery Limit Charging
 
@@ -58,6 +65,127 @@ action:
       value: 500
     target:
       entity_id: input_number.set_sg_battery_max_charge_power
+mode: single
+
+```
+
+```jsx
+alias: SG 10am battery charging
+description: ""
+trigger:
+  - platform: time
+    at: "10:00:00"
+condition: []
+action:
+  - service: input_number.set_value
+    data:
+      value: 5000
+    target:
+      entity_id: input_number.set_sg_battery_max_charge_power
+mode: single
+
+```
+
+## Force Charging
+
+```jsx
+  alias: Webhook ForceCharge
+  description: ""
+  trigger:
+    - platform: webhook
+      allowed_methods:
+        - POST
+      local_only: true
+      webhook_id: charge
+    - platform: time
+      at: "11:00:00"
+      enabled: true
+    - platform: time
+      at: 02:00:00
+      enabled: true
+    - platform: time
+      at: "20:00:00"
+      enabled: false
+  condition: []
+  action:
+    - service: input_select.select_option
+      data:
+        option: Forced mode
+      target:
+        entity_id: input_select.set_sg_ems_mode
+    - service: input_select.select_option
+      data:
+        option: Forced charge
+      target:
+        entity_id: input_select.set_sg_battery_forced_charge_discharge_cmd
+  mode: single
+
+```
+
+## Force Discharging
+
+```jsx
+alias: Webhook ForceDischarge
+description: ""
+trigger:
+  - platform: webhook
+    allowed_methods:
+      - POST
+    local_only: true
+    webhook_id: discharge
+  - platform: time
+    at: "17:00:00"
+  - platform: time
+    at: 06:30:00
+    enabled: false
+condition: []
+action:
+  - service: input_select.select_option
+    data:
+      option: Forced mode
+    target:
+      entity_id: input_select.set_sg_ems_mode
+  - service: input_select.select_option
+    data:
+      option: Forced discharge
+    target:
+      entity_id: input_select.set_sg_battery_forced_charge_discharge_cmd
+mode: single
+
+```
+
+## Self Consume
+
+```jsx
+alias: Webhook SelfConsume
+description: ""
+trigger:
+  - platform: webhook
+    allowed_methods:
+      - POST
+    local_only: true
+    webhook_id: selfconsume
+  - platform: time
+    at: "14:00:00"
+  - platform: time
+    at: 09:30:00
+  - platform: time
+    at: 03:00:00
+    enabled: true
+  - platform: time
+    at: "19:30:00"
+condition: []
+action:
+  - service: input_select.select_option
+    data:
+      option: Stop (default)
+    target:
+      entity_id: input_select.set_sg_battery_forced_charge_discharge_cmd
+  - service: input_select.select_option
+    data:
+      option: Self-consumption mode (default)
+    target:
+      entity_id: input_select.set_sg_ems_mode
 mode: single
 
 ```
@@ -81,11 +209,30 @@ mode: single
 
 ```
 
+## Notify Import Power to Mobile App
+
+```jsx
+alias: Notify Import Power
+description: Import Power
+trigger:
+  - platform: numeric_state
+    entity_id: sensor.import_power
+    above: 800
+condition: []
+action:
+  - service: notify.mobile_app_zee97
+    data:
+      message: Power {{ states('sensor.import_power') }} W
+      title: Import Power
+mode: single
+
+```
+
 ## Notify Battery Discharging Power to Mobile App
 
 ```jsx
 alias: Battery Discharge Power
-description: Battery discharge W
+description: Battery Discharge W
 trigger:
   - platform: numeric_state
     entity_id: sensor.battery_discharging_power
