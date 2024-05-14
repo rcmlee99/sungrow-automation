@@ -249,7 +249,14 @@ action:
 mode: single
 ```
 
-## IOS Shortcut to Home Assistant
+# Iphone Shortcuts
+
+Using webhook trigger, I can create collection of iPhone Shortcuts which I can activate using one click or Siri.
+
+![IphoneShortcuts](images/IMG_9146.PNG)
+
+
+## Battery Limit Charging Webhook
 
 ```jsx
 
