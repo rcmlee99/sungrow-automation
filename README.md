@@ -255,6 +255,61 @@ Using webhook trigger, I can create collection of iPhone Shortcuts which I can a
 
 ![IphoneShortcuts](images/IMG_9146.PNG)
 
+## Zero Solar Export Limit (Curtailment)
+
+```jsx
+alias: Zero Export Limit
+description: ''
+trigger:
+- platform: webhook
+  allowed_methods:
+  - POST
+  local_only: true
+  webhook_id: zeroexportlimit
+condition: []
+action:
+- service: input_select.select_option
+  data:
+    option: Enabled
+  target:
+    entity_id: input_select.set_sg_export_power_limit_mode
+- service: input_number.set_value
+  data:
+    value: 100
+  target:
+    entity_id: input_number.set_sg_export_power_limit
+mode: single
+
+```
+
+## Disabled Solar Export Limit
+
+```jsx
+alias: DisabledExportLimit
+description: ''
+trigger:
+- platform: webhook
+  allowed_methods:
+  - POST
+  local_only: true
+  webhook_id: disabledexportlimit
+- platform: time
+  at: '14:00:00'
+condition: []
+action:
+- service: input_select.select_option
+  data:
+    option: Disabled
+  target:
+    entity_id: input_select.set_sg_export_power_limit_mode
+- service: input_number.set_value
+  data:
+    value: 5000
+  target:
+    entity_id: input_number.set_sg_export_power_limit
+mode: single
+
+```
 
 ## Battery Limit Charging Webhook
 

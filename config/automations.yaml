@@ -244,3 +244,71 @@
       target:
         entity_id: input_select.set_sg_ems_mode
   mode: single
+- id: '1715744706204'
+  alias: Zero Export Limit
+  description: ''
+  trigger:
+  - platform: webhook
+    allowed_methods:
+    - POST
+    local_only: true
+    webhook_id: zeroexportlimit
+  condition: []
+  action:
+  - service: input_select.select_option
+    data:
+      option: Enabled
+    target:
+      entity_id: input_select.set_sg_export_power_limit_mode
+  - service: input_number.set_value
+    data:
+      value: 100
+    target:
+      entity_id: input_number.set_sg_export_power_limit
+  mode: single
+- id: '1715744928445'
+  alias: DisabledExportLimit
+  description: ''
+  trigger:
+  - platform: webhook
+    allowed_methods:
+    - POST
+    local_only: true
+    webhook_id: disabledexportlimit
+  - platform: time
+    at: '14:00:00'
+  condition: []
+  action:
+  - service: input_select.select_option
+    data:
+      option: Disabled
+    target:
+      entity_id: input_select.set_sg_export_power_limit_mode
+  - service: input_number.set_value
+    data:
+      value: 5000
+    target:
+      entity_id: input_number.set_sg_export_power_limit
+  mode: single
+- id: '1715745127430'
+  alias: Set Export Limit
+  description: ''
+  trigger:
+  - platform: webhook
+    allowed_methods:
+    - POST
+    local_only: true
+    webhook_id: exportlimit
+  condition: []
+  action:
+  - service: input_select.select_option
+    data:
+      option: Enabled
+    target:
+      entity_id: input_select.set_sg_export_power_limit_mode
+  - service: input_number.set_value
+    data:
+      value: '{{ trigger.json.value }}'
+    target:
+      entity_id: input_number.set_sg_export_power_limit
+  mode: single
