@@ -118,6 +118,11 @@ mode: single
         option: Forced charge
       target:
         entity_id: input_select.set_sg_battery_forced_charge_discharge_cmd
+    - service: input_number.set_value
+      data:
+        value: 5000
+      target:
+        entity_id: input_number.set_sg_forced_charge_discharge_power
   mode: single
 
 ```
@@ -150,6 +155,11 @@ action:
       option: Forced discharge
     target:
       entity_id: input_select.set_sg_battery_forced_charge_discharge_cmd
+  - service: input_number.set_value
+      data:
+        value: 5000
+      target:
+        entity_id: input_number.set_sg_forced_charge_discharge_power
 mode: single
 
 ```
@@ -352,11 +362,11 @@ In Iphone Shortcuts, create a new actions `Get contents of URL` add the followin
 
 # Current home assistant configuration
 
-My current home configuration - Home Assistant Core Version 2023.9.3
+My current home configuration - Home Assistant Core Version 2024.8.2
 
-1. Goodwe 5kW Inverter GW5000D-NS with 17x390watt JA Panel (6630W)
-2. Sungrow 5kW Hybrid Inverter SH5.0RS with 22xTSM-430NEG9R.28 Trina Panel (9460W)
-3. Sungrow Battery 16kWh capacity
+1. Sungrow 5kW Hybrid Inverter SH5.0RS with 17x390W JA Panel (6630W) and 19X430W Trina 430NEG9R (8170W).
+2. Sungrow 5kW Hybrid Inverter SH5.0RS with 22x430W Trina 430NEG9R28 Trina Panel (9460W).
+3. Sungrow Battery 19.2kWh capacity
 4. Sungrow Energy Monitor DTSU-666-20
 5. Google Home Wifi Model GJ2CQ
 
