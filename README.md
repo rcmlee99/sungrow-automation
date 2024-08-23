@@ -362,9 +362,9 @@ In Iphone Shortcuts, create a new actions `Get contents of URL` add the followin
 
 # Current home assistant configuration
 
-My current home configuration - Home Assistant Core Version 2024.8.2
+My current home configuration - Home Assistant Core Version 2024.7.2
 
-1. Sungrow 5kW Hybrid Inverter SH5.0RS with 17x390W JA Panel (6630W) and 19X430W Trina 430NEG9R (8170W).
+1. Sungrow 5kW Hybrid Inverter SH10.0RS with 17x390W JA Panel (6630W) and 19X430W Trina 430NEG9R (8170W).
 2. Sungrow 5kW Hybrid Inverter SH5.0RS with 22x430W Trina 430NEG9R28 Trina Panel (9460W).
 3. Sungrow Battery 19.2kWh capacity
 4. Sungrow Energy Monitor DTSU-666-20
@@ -375,3 +375,6 @@ My current home configuration - Home Assistant Core Version 2024.8.2
 - Modbus Protocol on Mkaiser https://github.com/mkaiser/Sungrow-SHx-Inverter-Modbus-Home-Assistant
 
 - Webhooks & Shortcuts https://www.youtube.com/watch?v=ZXTI286DwYQ&t=633s
+
+- AEMO Poll pricing https://github.com/cabberley/HA_AemoNemData
+
