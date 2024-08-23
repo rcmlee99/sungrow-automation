@@ -1,0 +1,112 @@
+title: EMS Control
+icon: mdi:solar-power
+cards:
+  - type: entities
+    entities:
+      - entity: input_select.set_sg_inverter_run_mode
+      - entity: sensor.sungrow_inverter_state
+      - entity: sensor.ems_mode_selection
+      - entity: sensor.battery_forced_charge_discharge_cmd
+    title: Inverter State
+  - type: entities
+    entities:
+      - entity: input_select.set_sg_ems_mode
+      - entity: input_select.set_sg_battery_forced_charge_discharge_cmd
+      - entity: input_number.set_sg_min_soc
+      - entity: input_number.set_sg_max_soc
+      - entity: input_number.set_sg_reserved_soc_for_backup
+      - entity: input_number.set_sg_forced_charge_discharge_power
+      - entity: input_number.set_sg_battery_max_charge_power
+      - entity: input_number.set_sg_battery_max_discharge_power
+      - entity: input_number.set_sg_battery_charging_start_power
+      - entity: input_number.set_sg_battery_discharging_start_power
+    title: EMS & Battery Settings
+    state_color: false
+    show_header_toggle: true
+  - type: entities
+    entities:
+      - entity: sensor.battery_capacity
+      - entity: sensor.battery_level
+      - entity: sensor.battery_state_of_health
+      - entity: sensor.min_soc
+      - entity: sensor.max_soc
+      - entity: sensor.reserved_soc_for_backup
+      - entity: sensor.battery_forced_charge_discharge_power
+      - entity: sensor.battery_max_charge_power
+      - entity: sensor.battery_max_discharge_power
+      - entity: sensor.battery_charging_start_power
+      - entity: sensor.battery_discharging_start_power
+    title: Battery Status
+  - type: entities
+    entities:
+      - entity: sensor.export_power_limit_mode
+      - entity: sensor.export_power_limit
+      - entity: input_select.set_sg_export_power_limit_mode
+      - entity: input_number.set_sg_export_power_limit
+    title: Export Settings
+  - type: entities
+    entities:
+      - entity: input_select.set_sg_inverter_run_mode2
+      - entity: sensor.sungrow_inverter_state2
+      - entity: sensor.ems_mode_selection2
+      - entity: sensor.battery_forced_charge_discharge_cmd2
+    title: Inverter State 2
+  - type: entities
+    entities:
+      - entity: sensor.export_power_limit_mode2
+      - entity: sensor.export_power_limit2
+      - entity: input_select.set_sg_export_power_limit_mode2
+      - entity: input_number.set_sg_export_power_limit2
+    title: Export Settings 2
+  - type: entities
+    entities:
+      - entity: input_select.set_sg_ems_mode2
+      - entity: input_select.set_sg_battery_forced_charge_discharge_cmd2
+      - entity: input_number.set_sg_min_soc2
+      - entity: input_number.set_sg_max_soc2
+      - entity: input_number.set_sg_reserved_soc_for_backup2
+      - entity: input_number.set_sg_forced_charge_discharge_power2
+      - entity: input_number.set_sg_battery_max_charge_power2
+      - entity: input_number.set_sg_battery_max_discharge_power2
+      - entity: input_number.set_sg_battery_charging_start_power2
+      - entity: input_number.set_sg_battery_discharging_start_power2
+    title: EMS & Battery Settings 2
+    state_color: false
+    show_header_toggle: true
+  - type: entities
+    entities:
+      - entity: sensor.battery_capacity2
+      - entity: sensor.battery_level2
+      - entity: sensor.battery_state_of_health2
+      - entity: sensor.min_soc2
+      - entity: sensor.max_soc2
+      - entity: sensor.reserved_soc_for_backup2
+      - entity: sensor.battery_forced_charge_discharge_power2
+      - entity: sensor.battery_max_charge_power2
+      - entity: sensor.battery_max_discharge_power2
+      - entity: sensor.battery_charging_start_power2
+      - entity: sensor.battery_discharging_start_power2
+    title: Battery Status 2
+  - type: entities
+    entities:
+      - entity: sensor.sungrow_device_type
+      - entity: sensor.total_dc_power
+      - entity: sensor.total_dc_power
+      - entity: sensor.meter_active_power
+      - entity: sensor.load_power
+      - entity: sensor.export_power
+      - entity: sensor.import_power
+      - entity: sensor.battery_charging_power
+      - entity: sensor.battery_discharging_power
+    title: Power
+  - type: entities
+    entities:
+      - entity: sensor.sungrow_device_type2
+      - entity: sensor.total_dc_power2
+      - entity: sensor.meter_active_power2
+      - entity: sensor.load_power2
+      - entity: sensor.export_power2
+      - entity: sensor.import_power2
+      - entity: sensor.battery_charging_power2
+      - entity: sensor.battery_discharging_power2
+    title: Power2
