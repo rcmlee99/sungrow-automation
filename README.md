@@ -362,7 +362,7 @@ In Iphone Shortcuts, create a new actions `Get contents of URL` add the followin
 
 # Current home assistant configuration
 
-My current home configuration - Home Assistant Core Version 2024.7.2
+My current home configuration - Home Assistant Core Version 2024.8.3
 
 1. Sungrow 5kW Hybrid Inverter SH10.0RS with 17x390W JA Panel (6630W) and 19X430W Trina 430NEG9R (8170W).
 2. Sungrow 5kW Hybrid Inverter SH5.0RS with 22x430W Trina 430NEG9R28 Trina Panel (9460W).

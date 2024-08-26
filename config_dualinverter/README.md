@@ -1,9 +1,10 @@
-This repository folder contains information on how to modbus integration to Dual Sungrow Inverters in one Home Assistant instance. This is for advance users only. 
+This repository folder contains information on how to modbus integration to Dual Sungrow Inverters in one Home Assistant instance. This is for advance users only.
 
 # Prerequisite
 
-1. Running version of Home Assistance (HA) at least 2024.7.2
-2. Backup of your HA before proceed !
+1. Running version of Home Assistance (HA) at least 2024.8.3.
+2. Please upgrade and remember to backup of your HA before proceed ! 
+3. Two Sungrow Inverters not running on Master - Slave setup. It doesn't have to be identical.
 
 ## Copy the following files into the same folder structure under config
 
@@ -12,7 +13,7 @@ This repository folder contains information on how to modbus integration to Dual
 3. configufation.yaml
 4. dashboard.yaml
 
-under integrations
+under integrations folder
 1. modbus_sungrow.yaml
 2. modbus_sungrow2.yaml
 
@@ -69,7 +70,7 @@ mode: single
 
 # Current home assistant configuration
 
-My current home configuration - Home Assistant Core Version 2024.7.2
+My current home configuration - Home Assistant Core Version 2024.8.3
 
 1. Sungrow 5kW Hybrid Inverter SH10.0RS with 17x390W JA Panel (6630W) and 19X430W Trina 430NEG9R (8170W).
 2. Sungrow 5kW Hybrid Inverter SH5.0RS with 22x430W Trina 430NEG9R28 Trina Panel (9460W).
