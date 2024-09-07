@@ -2273,7 +2273,7 @@ template:
         unit_of_measurement: W
         device_class: power
         state_class: measurement
-        availability: "{{states('sensor.export_power_raw')|is_number }}"
+        availability: "{{ not is_state('sensor.export_power_raw', 'unavailable') }}"
         state: >-
           {% if states('sensor.export_power_raw')|int > 0 %}
             {{ states('sensor.export_power_raw') }}
@@ -2492,7 +2492,7 @@ input_number:
   set_sg_export_power_limit:
     name: Set export power limit
     min: 0
-    max: 10500 # Note: max for SH10.RT. It would be ncie to have this as a global variable /secret
+    max: 10000 # Note: max for SH10.RT. It would be nice to have this as a global variable /secret
     step: 100
 
 input_select:
