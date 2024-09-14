@@ -46,23 +46,14 @@ views:
           red: 20
       - type: entities
         entities:
-          - entity: sensor.battery_capacity
-          - entity: sensor.battery_charging_power
-          - entity: sensor.battery_discharging_power
-          - entity: sensor.battery_voltage
-          - entity: sensor.battery_current
-          - entity: sensor.battery_level
-          - entity: sensor.battery_state_of_health
-          - entity: sensor.battery_temperature
-          - entity: sensor.daily_battery_charge_from_pv
-          - entity: sensor.daily_battery_charge
-          - entity: sensor.daily_battery_discharge
-          - entity: sensor.total_battery_charge_from_pv
-          - entity: sensor.total_battery_discharge
-          - entity: sensor.total_battery_charge
-          - entity: sensor.max_soc
-          - entity: sensor.min_soc
-        title: Battery
+          - entity: sensor.total_dc_power
+          - entity: sensor.mppt1_power
+          - entity: sensor.mppt1_voltage
+          - entity: sensor.mppt1_current
+          - entity: sensor.mppt2_power
+          - entity: sensor.mppt2_voltage
+          - entity: sensor.mppt2_current
+        title: PV Gen
       - type: entities
         entities:
           - entity: sensor.ems_mode_selection
@@ -79,26 +70,6 @@ views:
           - entity: sensor.max_soc2
           - entity: sensor.battery_forced_charge_discharge_power2
         title: EMS 2
-      - type: entities
-        entities:
-          - entity: sensor.total_dc_power
-          - entity: sensor.mppt1_power
-          - entity: sensor.mppt1_voltage
-          - entity: sensor.mppt1_current
-          - entity: sensor.mppt2_power
-          - entity: sensor.mppt2_voltage
-          - entity: sensor.mppt2_current
-        title: PV Gen
-      - type: entities
-        entities:
-          - entity: sensor.total_dc_power2
-          - entity: sensor.mppt1_power2
-          - entity: sensor.mppt1_voltage2
-          - entity: sensor.mppt1_current2
-          - entity: sensor.mppt2_power2
-          - entity: sensor.mppt2_voltage2
-          - entity: sensor.mppt2_current2
-        title: PV Gen 2
       - type: entities
         entities:
           - entity: sensor.daily_pv_generation
@@ -123,23 +94,36 @@ views:
         title: Energy SH5RS
       - type: entities
         entities:
-          - entity: sensor.battery_capacity2
-          - entity: sensor.battery_charging_power2
-          - entity: sensor.battery_discharging_power2
-          - entity: sensor.battery_voltage2
-          - entity: sensor.battery_current2
-          - entity: sensor.battery_level2
-          - entity: sensor.battery_state_of_health2
-          - entity: sensor.battery_temperature2
-          - entity: sensor.daily_battery_charge_from_pv2
-          - entity: sensor.daily_battery_charge2
-          - entity: sensor.daily_battery_discharge2
-          - entity: sensor.total_battery_charge_from_pv2
-          - entity: sensor.total_battery_discharge2
-          - entity: sensor.total_battery_charge2
-          - entity: sensor.max_soc2
-          - entity: sensor.min_soc2
-        title: Battery 2
+          - entity: sensor.sungrow_device_type
+          - entity: sensor.sungrow_inverter_state
+          - entity: sensor.running_state
+          - entity: sensor.system_state
+          - entity: sensor.inverter_temperature
+          - entity: binary_sensor.pv_generating
+          - entity: binary_sensor.battery_charging
+          - entity: binary_sensor.battery_discharging
+          - entity: binary_sensor.exporting_power
+          - entity: binary_sensor.importing_power
+        title: Inverter State
+      - type: entities
+        entities:
+          - entity: sensor.battery_capacity
+          - entity: sensor.battery_charging_power
+          - entity: sensor.battery_discharging_power
+          - entity: sensor.battery_voltage
+          - entity: sensor.battery_current
+          - entity: sensor.battery_level
+          - entity: sensor.battery_state_of_health
+          - entity: sensor.battery_temperature
+          - entity: sensor.daily_battery_charge_from_pv
+          - entity: sensor.daily_battery_charge
+          - entity: sensor.daily_battery_discharge
+          - entity: sensor.total_battery_charge_from_pv
+          - entity: sensor.total_battery_discharge
+          - entity: sensor.total_battery_charge
+          - entity: sensor.max_soc
+          - entity: sensor.min_soc
+        title: Battery
   - title: Battery
     icon: mdi:sun-compass
     cards:

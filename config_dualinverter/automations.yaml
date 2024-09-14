@@ -1,3 +1,9 @@
+# Home Assistant Sungrow second inverter integration
+# https://github.com/rcmlee99/sungrow-automation/tree/main/config_dualinverter
+# last update: 2024-09-14
+#
+# Note: This YAML file will only work with Home Assistant >= 2023.10
+
 - id: '1694579954921'
   alias: SG 10am BattLimit
   description: ''

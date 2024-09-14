@@ -1552,17 +1552,17 @@ modbus:
         scan_interval: 10
 
       #undocumented sensor (reverse engineered by some guys of photovoltaikforum.com and forum.iobroker.net )
-      - name: Reserved SoC for backup2
-        unique_id: sg_reserved_soc_for_backup2
-        device_address: !secret sungrow_modbus_slave2
-        address: 13099 # reg 13100
-        input_type: holding
-        data_type: uint16
-        unit_of_measurement: "%"
-        device_class: battery
-        state_class: measurement
-        scale: 1
-        scan_interval: 10
+      # - name: Reserved SoC for backup2
+      #   unique_id: sg_reserved_soc_for_backup2
+      #   device_address: !secret sungrow_modbus_slave2
+      #   address: 13099 # reg 13100
+      #   input_type: holding
+      #   data_type: uint16
+      #   unit_of_measurement: "%"
+      #   device_class: battery
+      #   state_class: measurement
+      #   scale: 1
+      #   scan_interval: 10
 
       - name: Battery max charge power2
         unique_id: sg_battery_max_charge_power2
@@ -1591,45 +1591,45 @@ modbus:
         scan_interval: 10
 
       #undocumented sensor (reverse engineered by some guys of photovoltaikforum.com and forum.iobroker.net )
-      - name: Battery capacity2
-        unique_id: sg_battery_capacity2
-        device_address: !secret sungrow_modbus_slave2
-        address: 33048 # reg 33049
-        input_type: holding
-        data_type: uint16
-        precision: 1
-        unit_of_measurement: kWh
-        device_class: energy_storage
-        scale: 0.01
-        scan_interval: 600
+      # - name: Battery capacity2
+      #   unique_id: sg_battery_capacity2
+      #   device_address: !secret sungrow_modbus_slave2
+      #   address: 33048 # reg 33049
+      #   input_type: holding
+      #   data_type: uint16
+      #   precision: 1
+      #   unit_of_measurement: kWh
+      #   device_class: energy_storage
+      #   scale: 0.01
+      #   scan_interval: 600
 
       #undocumented sensor (reverse engineered by some guys of photovoltaikforum.com and forum.iobroker.net )
-      - name: Battery charging start power2
-        unique_id: sg_battery_charging_start_power2
-        device_address: !secret sungrow_modbus_slave2
-        address: 33148 # reg 33149
-        input_type: holding
-        data_type: uint16
-        precision: 0
-        unit_of_measurement: W
-        device_class: power
-        state_class: measurement
-        scale: 10
-        scan_interval: 10
+      # - name: Battery charging start power2
+      #   unique_id: sg_battery_charging_start_power2
+      #   device_address: !secret sungrow_modbus_slave2
+      #   address: 33148 # reg 33149
+      #   input_type: holding
+      #   data_type: uint16
+      #   precision: 0
+      #   unit_of_measurement: W
+      #   device_class: power
+      #   state_class: measurement
+      #   scale: 10
+      #   scan_interval: 10
 
       #undocumented sensor (reverse engineered by some guys of photovoltaikforum.com and forum.iobroker.net )
-      - name: Battery discharging start power2
-        unique_id: sg_battery_discharging_start_power2
-        device_address: !secret sungrow_modbus_slave2
-        address: 33149 # reg 33150
-        input_type: holding
-        data_type: uint16
-        precision: 0
-        unit_of_measurement: W
-        device_class: power
-        state_class: measurement
-        scale: 10
-        scan_interval: 10
+      # - name: Battery discharging start power2
+      #   unique_id: sg_battery_discharging_start_power2
+      #   device_address: !secret sungrow_modbus_slave2
+      #   address: 33149 # reg 33150
+      #   input_type: holding
+      #   data_type: uint16
+      #   precision: 0
+      #   unit_of_measurement: W
+      #   device_class: power
+      #   state_class: measurement
+      #   scale: 10
+      #   scan_interval: 10
 
       - name: Global mpp scan manual raw2
         unique_id: sg_global_mpp_scan_manual_raw2
