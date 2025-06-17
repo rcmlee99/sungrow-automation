@@ -10,12 +10,13 @@ This repository folder contains information on how to modbus integration to Dual
 
 1. secrets.yaml
 2. automations.yaml
-3. configufation.yaml
+3. configuration.yaml
 4. dashboard.yaml
 
 under integrations folder
 1. modbus_sungrow.yaml
 2. modbus_sungrow2.yaml
+3. local_input_energy.yaml
 
 ## Configuration and restart HA
 

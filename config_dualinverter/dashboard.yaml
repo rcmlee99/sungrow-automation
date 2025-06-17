@@ -5,29 +5,74 @@
 views:
   - title: Power
     icon: mdi:solar-power-variant-outline
+    badges:
+      - type: entity
+        show_name: true
+        show_state: true
+        show_icon: true
+        entity: sensor.118blakesleyrd_feed_in_price
+        name: Amber Current
+      - type: entity
+        show_name: true
+        show_state: true
+        show_icon: true
+        entity: sensor.aemo_nem_nsw1_current_5min_period_price
+        name: AEOM 5min Current
+        show_entity_picture: true
+      - type: entity
+        show_name: true
+        show_state: true
+        show_icon: true
+        entity: sensor.export_power_limit
+      - type: entity
+        show_name: true
+        show_state: true
+        show_icon: true
+        entity: sensor.export_power_limit2
+      - type: entity
+        show_name: true
+        show_state: true
+        show_icon: true
+        entity: sensor.116_blakesley_feed_in_price
+        name: Amber Average
+      - type: entity
+        show_name: true
+        show_state: true
+        show_icon: true
+        entity: sensor.118blakesleyrd_general_price
+        name: Amber Use
     cards:
       - type: entities
         entities:
-          - entity: sensor.sungrow_device_type
           - entity: sensor.total_dc_power
+            secondary_info: last-updated
           - entity: sensor.meter_active_power
+            secondary_info: last-updated
           - entity: sensor.battery_charging_power
+            name: Batt charge power
           - entity: sensor.battery_discharging_power
+            name: Batt discharge power
           - entity: sensor.load_power
-          - entity: sensor.export_power
-          - entity: sensor.import_power
+          - entity: sensor.battery_level
+            secondary_info: last-updated
         title: Power 1
+        show_header_toggle: false
+        state_color: true
       - type: entities
         entities:
-          - entity: sensor.sungrow_device_type2
           - entity: sensor.total_dc_power2
+            secondary_info: last-updated
           - entity: sensor.meter_active_power2
+            secondary_info: last-updated
           - entity: sensor.battery_charging_power2
+            name: Batt charge power2
           - entity: sensor.battery_discharging_power2
+            name: Batt discharge power2
           - entity: sensor.load_power2
-          - entity: sensor.export_power2
-          - entity: sensor.import_power2
+          - entity: sensor.battery_level2
+            secondary_info: last-updated
         title: Power 2
+        state_color: true
       - type: gauge
         entity: sensor.battery_level
         min: 0
@@ -143,6 +188,46 @@ views:
   - title: Battery
     icon: mdi:sun-compass
     cards:
+      - type: vertical-stack
+        cards:
+          - type: entities
+            title: ⚙️ Discharge Control / FIT Prices
+            entities:
+              - entity: input_number.sell_fit_morning
+                name: Sell FIT AM
+              - entity: input_number.sell_fit_evening1
+                name: Sell FIT PM 1
+              - entity: input_number.sell_fit_evening2
+                name: Sell FIT PM 2
+              - entity: input_number.sell_fit_all
+                name: Sell FIT All
+              - entity: input_number.forcedischargebattlimit1
+                name: Batt Limit 1
+              - entity: input_number.forcedischargebattlimit2
+                name: Batt Limit 2
+            show_header_toggle: true
+          - type: entities
+            title: ⚙️ Charging Controls / FIT Prices
+            entities:
+              - entity: input_number.buy_fit_for_charging
+                name: Buy FIT Force Charging
+              - entity: input_boolean.force_charge_enable_am1
+                name: Force Charge AM 1
+              - entity: input_boolean.force_charge_enable_am2
+                name: Force Charge AM 2
+              - entity: input_number.forcechargebattlimit_am
+                name: Batt Limit AM
+              - entity: input_boolean.force_charge_enable_pm1
+                name: Force Charge PM 1
+              - entity: input_boolean.force_charge_enable_pm2
+                name: Force Charge PM 2
+              - entity: input_number.forcechargebattlimit_pm
+                name: Batt Limit PM
+              - entity: input_boolean.charge_slowly
+                name: Charge Slowly
+              - entity: input_boolean.sunny_weather
+                name: Sunny Weather
+            show_header_toggle: false
       - type: gauge
         entity: sensor.battery_level
         min: 0
@@ -181,9 +266,18 @@ views:
         entities:
           - entity: sensor.total_dc_power
           - entity: sensor.total_dc_power2
+          - entity: sensor.combine_dc_power
           - entity: sensor.battery_charging_power
           - entity: sensor.battery_charging_power2
-        title: DC Generation
+          - entity: sensor.combine_battery_charging
+          - entity: sensor.export_power
+          - entity: sensor.export_power2
+          - entity: sensor.combine_export_power
+          - entity: sensor.battery_discharging_power
+          - entity: sensor.battery_discharging_power2
+          - entity: sensor.load_power
+          - entity: sensor.load_power2
+        title: Power Generation
       - chart_type: line
         period: 5minute
         type: statistics-graph
@@ -193,7 +287,9 @@ views:
         stat_types:
           - mean
         title: DC Power
-        days_to_show: 0.25
+        hide_legend: false
+        logarithmic_scale: false
+        days_to_show: 0.5
       - show_name: true
         show_icon: true
         show_state: true
@@ -244,6 +340,282 @@ views:
           - mean
         days_to_show: 0.25
         title: Load Power
+  - icon: mdi:transmission-tower
+    badges:
+      - type: entity
+        show_name: true
+        show_state: true
+        show_icon: true
+        entity: sensor.118blakesleyrd_general_price
+        name: Amber Use Price
+      - type: entity
+        show_name: true
+        show_state: true
+        show_icon: true
+        entity: sensor.118blakesleyrd_feed_in_price
+        name: Amber FIT price
+      - type: entity
+        show_name: true
+        show_state: true
+        show_icon: true
+        entity: sensor.aemo_nem_nsw1_current_5min_period_price
+        name: AEOM 5min Current
+      - type: entity
+        show_name: true
+        show_state: true
+        show_icon: true
+        entity: sensor.aemo_nem_nsw1_current_30min_avg
+        name: AEMO 30min Average
+      - type: entity
+        show_name: true
+        show_state: true
+        show_icon: true
+        entity: sensor.aemo_nem_nsw1_period_1
+        name: AEMO Period1
+      - type: entity
+        show_name: true
+        show_state: true
+        show_icon: true
+        entity: sensor.aemo_nem_nsw1_period_2
+        name: AEOM Period2
+      - type: entity
+        show_name: true
+        show_state: true
+        show_icon: true
+        entity: sensor.aemo_nem_nsw1_period_3
+        name: AEMO Prriod3
+      - type: entity
+        show_name: true
+        show_state: true
+        show_icon: true
+        entity: sensor.aemo_nem_nsw1_period_4
+        name: AEMO Period4
+      - type: entity
+        show_name: true
+        show_state: true
+        show_icon: true
+        entity: sensor.aemo_nem_nsw1_period_5
+        name: AEMO Period5
+      - type: entity
+        show_name: true
+        show_state: true
+        show_icon: true
+        entity: sensor.aemo_nem_nsw1_period_6
+        name: AEMO Period6
+    cards:
+      - chart_type: line
+        period: 5minute
+        type: statistics-graph
+        entities:
+          - sensor.118blakesleyrd_feed_in_price
+          - sensor.aemo_nem_nsw1_current_5min_period_price
+        stat_types:
+          - mean
+        hide_legend: false
+        title: Feed In
+        days_to_show: 0.15
+      - chart_type: line
+        period: 5minute
+        type: statistics-graph
+        entities:
+          - sensor.battery_level
+          - sensor.battery_level2
+        stat_types:
+          - mean
+          - min
+          - max
+        days_to_show: 2
+        title: Battery Level
+      - chart_type: line
+        period: 5minute
+        type: statistics-graph
+        entities:
+          - sensor.battery_charging_power
+          - sensor.battery_charging_power2
+        stat_types:
+          - mean
+        title: Battery Charging
+        days_to_show: 1
+      - chart_type: line
+        period: 5minute
+        type: statistics-graph
+        entities:
+          - sensor.battery_discharging_power
+          - sensor.battery_discharging_power2
+        stat_types:
+          - mean
+        title: Battery Discharging
+        days_to_show: 1
+      - type: entities
+        entities:
+          - sensor.aemo_nem_nsw1_periods_of_current_30min
+          - binary_sensor.aemonem_nsw1_apc_flag
+          - sensor.aemo_nem_nsw1_administered_price_cap
+          - sensor.aemo_nem_nsw1_cumulative_price_threshold
+          - sensor.aemo_nem_nsw1_current_30min_avg
+          - sensor.aemo_nem_nsw1_current_30min_estimated
+          - sensor.aemo_nem_nsw1_current_30min_forecast
+          - sensor.aemo_nem_nsw1_current_5min_period_price
+          - sensor.aemo_nem_nsw1_current_cumulative_price
+          - sensor.aemo_nem_nsw1_current_percent_cumulative_price
+          - sensor.aemo_nem_nsw1_n_q_mnsp1
+          - sensor.aemo_nem_nsw1_nsw1_qld1
+          - sensor.aemo_nem_nsw1_vic1_nsw1
+          - sensor.aemo_nem_nsw1_net_interconnector_flows
+          - sensor.aemo_nem_nsw1_scheduled_generation
+          - sensor.aemo_nem_nsw1_semi_scheduled_generation
+          - sensor.aemo_nem_nsw1_settlement_date
+          - sensor.aemo_nem_nsw1_total_demand
+          - sensor.aemo_nem_nsw1_market_price_cap
+          - binary_sensor.aemonem_nsw1_market_suspended_flag
+          - sensor.aemo_nem_nsw1_period_1
+          - sensor.aemo_nem_nsw1_period_2
+          - sensor.aemo_nem_nsw1_period_3
+          - sensor.aemo_nem_nsw1_period_4
+          - sensor.aemo_nem_nsw1_period_5
+          - sensor.aemo_nem_nsw1_period_6
+      - type: entities
+        entities:
+          - entity: sensor.116_blakesley_feed_in_price
+          - entity: sensor.116_blakesley_feed_in_forecast
+          - entity: sensor.116_blakesley_general_price
+          - entity: sensor.116_blakesley_general_forecast
+  - title: EMS Control
+    icon: mdi:solar-power
+    badges:
+      - type: entity
+        show_name: true
+        show_state: true
+        show_icon: true
+        entity: sensor.118blakesleyrd_feed_in_price
+        name: Amber FIT price
+      - type: entity
+        show_name: true
+        show_state: true
+        show_icon: true
+        entity: sensor.aemo_nem_nsw1_current_5min_period_price
+        name: AEOM 5min Current
+    cards:
+      - type: entities
+        entities:
+          - entity: input_select.set_sg_inverter_run_mode
+          - entity: sensor.ems_mode_selection
+          - entity: sensor.battery_forced_charge_discharge_cmd
+        title: Inverter State
+      - type: entities
+        entities:
+          - entity: input_select.set_sg_inverter_run_mode2
+          - entity: sensor.ems_mode_selection2
+          - entity: sensor.battery_forced_charge_discharge_cmd2
+        title: Inverter State 2
+      - type: gauge
+        entity: sensor.battery_level
+        min: 0
+        max: 100
+        severity:
+          green: 70
+          yellow: 40
+          red: 20
+        needle: true
+      - type: gauge
+        entity: sensor.battery_level2
+        min: 0
+        max: 100
+        severity:
+          green: 70
+          yellow: 40
+          red: 20
+        needle: true
+      - type: entities
+        entities:
+          - entity: input_select.set_sg_ems_mode
+          - entity: input_select.set_sg_battery_forced_charge_discharge_cmd
+          - entity: input_number.set_sg_min_soc
+          - entity: input_number.set_sg_max_soc
+          - entity: input_number.set_sg_reserved_soc_for_backup
+          - entity: input_number.set_sg_forced_charge_discharge_power
+          - entity: input_number.set_sg_battery_max_charge_power
+            name: Set max batt charge power
+          - entity: input_number.set_sg_battery_max_discharge_power
+            name: Set max batt discharge power
+          - entity: input_number.set_sg_battery_charging_start_power
+          - entity: input_number.set_sg_battery_discharging_start_power
+        title: EMS SH10RS
+        state_color: false
+        show_header_toggle: true
+      - type: entities
+        entities:
+          - entity: input_select.set_sg_ems_mode2
+          - entity: input_select.set_sg_battery_forced_charge_discharge_cmd2
+          - entity: input_number.set_sg_min_soc2
+          - entity: input_number.set_sg_max_soc2
+          - entity: input_number.set_sg_reserved_soc_for_backup2
+          - entity: input_number.set_sg_forced_charge_discharge_power2
+          - entity: input_number.set_sg_battery_max_charge_power2
+            name: Set max batt charge power
+          - entity: input_number.set_sg_battery_max_discharge_power2
+            name: Set max batt discharge power
+          - entity: input_number.set_sg_battery_charging_start_power2
+          - entity: input_number.set_sg_battery_discharging_start_power2
+        title: EMS SH5RS
+        state_color: false
+        show_header_toggle: true
+      - type: entities
+        entities:
+          - entity: sensor.battery_level
+          - entity: sensor.battery_state_of_health
+          - entity: sensor.min_soc
+          - entity: sensor.max_soc
+          - entity: sensor.battery_forced_charge_discharge_power
+          - entity: sensor.battery_max_charge_power
+          - entity: sensor.battery_max_discharge_power
+        title: Battery Status SH10RS
+      - type: entities
+        entities:
+          - entity: sensor.export_power_limit_mode
+          - entity: sensor.export_power_limit
+          - entity: input_select.set_sg_export_power_limit_mode
+          - entity: input_number.set_sg_export_power_limit
+        title: Export Settings SH10RS
+      - type: entities
+        entities:
+          - entity: sensor.export_power_limit_mode2
+          - entity: sensor.export_power_limit2
+          - entity: input_select.set_sg_export_power_limit_mode2
+          - entity: input_number.set_sg_export_power_limit2
+        title: Export Settings SH5RS
+      - type: entities
+        entities:
+          - entity: sensor.battery_level2
+          - entity: sensor.battery_state_of_health2
+          - entity: sensor.min_soc2
+          - entity: sensor.max_soc2
+          - entity: sensor.battery_forced_charge_discharge_power2
+          - entity: sensor.battery_max_charge_power2
+          - entity: sensor.battery_max_discharge_power2
+        title: Battery Status SH5RS
+      - type: entities
+        entities:
+          - entity: sensor.sungrow_device_type
+          - entity: sensor.total_dc_power
+          - entity: sensor.meter_active_power
+          - entity: sensor.load_power
+          - entity: sensor.export_power
+          - entity: sensor.import_power
+          - entity: sensor.battery_charging_power
+          - entity: sensor.battery_discharging_power
+        title: Power SH10RS
+      - type: entities
+        entities:
+          - entity: sensor.sungrow_device_type2
+          - entity: sensor.total_dc_power2
+          - entity: sensor.meter_active_power2
+          - entity: sensor.load_power2
+          - entity: sensor.export_power2
+          - entity: sensor.import_power2
+          - entity: sensor.battery_charging_power2
+          - entity: sensor.battery_discharging_power2
+        title: Power SH5RS
   - title: EMS Control
     icon: mdi:solar-power
     cards:
@@ -357,220 +729,4 @@ views:
           - entity: sensor.battery_discharging_power2
         title: Power2
     subview: true
-  - icon: mdi:transmission-tower
-    badges:
-      - entity: sensor.116_blakesley_general_price
-      - entity: sensor.116_blakesley_feed_in_price
-      - entity: sensor.aemo_nem_nsw1_current_5min_period_price
-      - entity: sensor.aemo_nem_nsw1_current_30min_avg
-      - entity: sensor.aemo_nem_nsw1_current_30min_estimated
-      - entity: sensor.aemo_nem_nsw1_current_30min_forecast
-    cards:
-      - chart_type: line
-        period: 5minute
-        type: statistics-graph
-        entities:
-          - sensor.116_blakesley_feed_in_price
-          - sensor.116_blakesley_feed_in_forecast
-          - sensor.aemo_nem_nsw1_current_5min_period_price
-        stat_types:
-          - mean
-        hide_legend: false
-        title: Feed In
-        days_to_show: 0.15
-      - chart_type: line
-        period: 5minute
-        type: statistics-graph
-        entities:
-          - sensor.116_blakesley_general_price
-          - sensor.116_blakesley_feed_in_price
-        stat_types:
-          - mean
-        title: General Price
-        days_to_show: 1
-      - chart_type: line
-        period: 5minute
-        type: statistics-graph
-        entities:
-          - sensor.battery_level
-          - sensor.battery_level2
-        stat_types:
-          - mean
-          - min
-          - max
-        days_to_show: 2
-        title: Battery Level
-      - chart_type: line
-        period: 5minute
-        type: statistics-graph
-        entities:
-          - sensor.battery_charging_power
-          - sensor.battery_charging_power2
-        stat_types:
-          - mean
-        title: Battery Charging
-        days_to_show: 1
-      - chart_type: line
-        period: 5minute
-        type: statistics-graph
-        entities:
-          - sensor.battery_discharging_power
-          - sensor.battery_discharging_power2
-        stat_types:
-          - mean
-        title: Battery Discharging
-        days_to_show: 1
-      - type: entities
-        entities:
-          - sensor.aemo_nem_nsw1_periods_of_current_30min
-          - binary_sensor.aemonem_nsw1_apc_flag
-          - sensor.aemo_nem_nsw1_administered_price_cap
-          - sensor.aemo_nem_nsw1_cumulative_price_threshold
-          - sensor.aemo_nem_nsw1_current_30min_avg
-          - sensor.aemo_nem_nsw1_current_30min_estimated
-          - sensor.aemo_nem_nsw1_current_30min_forecast
-          - sensor.aemo_nem_nsw1_current_5min_period_price
-          - sensor.aemo_nem_nsw1_current_cumulative_price
-          - sensor.aemo_nem_nsw1_current_percent_cumulative_price
-          - sensor.aemo_nem_nsw1_n_q_mnsp1
-          - sensor.aemo_nem_nsw1_nsw1_qld1
-          - sensor.aemo_nem_nsw1_vic1_nsw1
-          - sensor.aemo_nem_nsw1_net_interconnector_flows
-          - sensor.aemo_nem_nsw1_scheduled_generation
-          - sensor.aemo_nem_nsw1_semi_scheduled_generation
-          - sensor.aemo_nem_nsw1_settlement_date
-          - sensor.aemo_nem_nsw1_total_demand
-          - sensor.aemo_nem_nsw1_market_price_cap
-          - binary_sensor.aemonem_nsw1_market_suspended_flag
-          - sensor.aemo_nem_nsw1_period_1
-          - sensor.aemo_nem_nsw1_period_2
-          - sensor.aemo_nem_nsw1_period_3
-          - sensor.aemo_nem_nsw1_period_4
-          - sensor.aemo_nem_nsw1_period_5
-          - sensor.aemo_nem_nsw1_period_6
-      - type: entities
-        entities:
-          - entity: sensor.116_blakesley_feed_in_price
-          - entity: sensor.116_blakesley_feed_in_forecast
-          - entity: sensor.116_blakesley_general_price
-          - entity: sensor.116_blakesley_general_forecast
-  - title: EMS Control
-    icon: mdi:solar-power
-    cards:
-      - type: entities
-        entities:
-          - entity: input_select.set_sg_inverter_run_mode
-          - entity: sensor.ems_mode_selection
-          - entity: sensor.battery_forced_charge_discharge_cmd
-        title: Inverter State
-      - type: entities
-        entities:
-          - entity: input_select.set_sg_inverter_run_mode2
-          - entity: sensor.ems_mode_selection2
-          - entity: sensor.battery_forced_charge_discharge_cmd2
-        title: Inverter State 2
-      - type: gauge
-        entity: sensor.battery_level
-        min: 0
-        max: 100
-        severity:
-          green: 70
-          yellow: 40
-          red: 20
-        needle: true
-      - type: gauge
-        entity: sensor.battery_level2
-        min: 0
-        max: 100
-        severity:
-          green: 70
-          yellow: 40
-          red: 20
-        needle: true
-      - type: entities
-        entities:
-          - entity: input_select.set_sg_ems_mode
-          - entity: input_select.set_sg_battery_forced_charge_discharge_cmd
-          - entity: input_number.set_sg_min_soc
-          - entity: input_number.set_sg_max_soc
-          - entity: input_number.set_sg_reserved_soc_for_backup
-          - entity: input_number.set_sg_forced_charge_discharge_power
-          - entity: input_number.set_sg_battery_max_charge_power
-          - entity: input_number.set_sg_battery_max_discharge_power
-          - entity: input_number.set_sg_battery_charging_start_power
-          - entity: input_number.set_sg_battery_discharging_start_power
-        title: EMS SH10RS
-        state_color: false
-        show_header_toggle: true
-      - type: entities
-        entities:
-          - entity: input_select.set_sg_ems_mode2
-          - entity: input_select.set_sg_battery_forced_charge_discharge_cmd2
-          - entity: input_number.set_sg_min_soc2
-          - entity: input_number.set_sg_max_soc2
-          - entity: input_number.set_sg_reserved_soc_for_backup2
-          - entity: input_number.set_sg_forced_charge_discharge_power2
-          - entity: input_number.set_sg_battery_max_charge_power2
-          - entity: input_number.set_sg_battery_max_discharge_power2
-          - entity: input_number.set_sg_battery_charging_start_power2
-          - entity: input_number.set_sg_battery_discharging_start_power2
-        title: EMS SH5RS
-        state_color: false
-        show_header_toggle: true
-      - type: entities
-        entities:
-          - entity: sensor.battery_level
-          - entity: sensor.battery_state_of_health
-          - entity: sensor.min_soc
-          - entity: sensor.max_soc
-          - entity: sensor.battery_forced_charge_discharge_power
-          - entity: sensor.battery_max_charge_power
-          - entity: sensor.battery_max_discharge_power
-        title: Battery Status SH10RS
-      - type: entities
-        entities:
-          - entity: sensor.export_power_limit_mode
-          - entity: sensor.export_power_limit
-          - entity: input_select.set_sg_export_power_limit_mode
-          - entity: input_number.set_sg_export_power_limit
-        title: Export Settings SH10RS
-      - type: entities
-        entities:
-          - entity: sensor.export_power_limit_mode2
-          - entity: sensor.export_power_limit2
-          - entity: input_select.set_sg_export_power_limit_mode2
-          - entity: input_number.set_sg_export_power_limit2
-        title: Export Settings SH5RS
-      - type: entities
-        entities:
-          - entity: sensor.battery_level2
-          - entity: sensor.battery_state_of_health2
-          - entity: sensor.min_soc2
-          - entity: sensor.max_soc2
-          - entity: sensor.battery_forced_charge_discharge_power2
-          - entity: sensor.battery_max_charge_power2
-          - entity: sensor.battery_max_discharge_power2
-        title: Battery Status SH5RS
-      - type: entities
-        entities:
-          - entity: sensor.sungrow_device_type
-          - entity: sensor.total_dc_power
-          - entity: sensor.meter_active_power
-          - entity: sensor.load_power
-          - entity: sensor.export_power
-          - entity: sensor.import_power
-          - entity: sensor.battery_charging_power
-          - entity: sensor.battery_discharging_power
-        title: Power SH10RS
-      - type: entities
-        entities:
-          - entity: sensor.sungrow_device_type2
-          - entity: sensor.total_dc_power2
-          - entity: sensor.meter_active_power2
-          - entity: sensor.load_power2
-          - entity: sensor.export_power2
-          - entity: sensor.import_power2
-          - entity: sensor.battery_charging_power2
-          - entity: sensor.battery_discharging_power2
-        title: Power SH5RS
 title: Battery
