@@ -24,6 +24,22 @@ Modify the secrets.yaml and change the IP address of both your inverters.
 
 Finally restart HA.
 
+## NodeRed Automation Flow
+
+I also developed a custom, fine-grained control system for both inverters using Node-RED.
+
+![NodeRedFlowSungrow](images/nodered.png)
+
+File: nodered_sungrow.json
+
+## Advance UI Controls
+
+Developed advanced user interface controls for dynamic Buy/Sell FIT adjustment and battery charge/discharge management, with fine-grained inverter automation built in Node-RED.
+
+![AdvanceContols](images/advancecontrolsUI.png)
+
+File:  dashboard_fitchargecontrols.yaml
+
 # Automations
 
 To create new automation triggers, goto Settings -> Automations & Scenes then click Create Automation. On the top right corner, click on the 3 dots and select edit in YAML.
