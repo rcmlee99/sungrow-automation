@@ -1,38 +1,24 @@
 type: vertical-stack
 cards:
   - type: entities
-    title: ⚙️ Discharge Control / FIT Prices
-    entities:
-      - entity: input_number.sell_fit_morning
-        name: Sell FIT AM
-      - entity: input_number.sell_fit_evening1
-        name: Sell FIT PM 1
-      - entity: input_number.sell_fit_evening2
-        name: Sell FIT PM 2
-      - entity: input_number.sell_fit_all
-        name: Sell FIT All
-      - entity: input_number.forcedischargebattlimit1
-        name: Batt Limit 1
-      - entity: input_number.forcedischargebattlimit2
-        name: Batt Limit 2
-    show_header_toggle: true
-  - type: entities
     title: ⚙️ Charging Controls / FIT Prices
     entities:
       - entity: input_number.buy_fit_for_charging
         name: Buy FIT Force Charging
+      - entity: input_number.forcechargebattlimit_am
+        name: Batt Limit AM
       - entity: input_boolean.force_charge_enable_am1
         name: Force Charge AM 1
       - entity: input_boolean.force_charge_enable_am2
         name: Force Charge AM 2
-      - entity: input_number.forcechargebattlimit_am
-        name: Batt Limit AM
+      - entity: input_number.forcechargebattlimit_pm
+        name: Batt Limit PM
       - entity: input_boolean.force_charge_enable_pm1
         name: Force Charge PM 1
       - entity: input_boolean.force_charge_enable_pm2
         name: Force Charge PM 2
-      - entity: input_number.forcechargebattlimit_pm
-        name: Batt Limit PM
+      - entity: input_number.slow_fit_morning
+        name: Slow Sell FIT
       - entity: input_boolean.charge_slowly
         name: Charge Slowly
       - entity: input_boolean.sunny_weather

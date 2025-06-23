@@ -31,15 +31,15 @@
         "id": "92b50c087fe8cda8",
         "type": "inject",
         "z": "5f20dbf7637ea30d",
-        "name": "Every 5 Min 5-10pm",
+        "name": "Every 5 Min 5-9pm",
         "props": [],
         "repeat": "",
-        "crontab": "*/5 17-21 * * *",
+        "crontab": "*/5 17-20 * * *",
         "once": true,
         "onceDelay": "2",
         "topic": "",
-        "x": 740,
-        "y": 640,
+        "x": 760,
+        "y": 580,
         "wires": [
             [
                 "d473c1dc91dbcee9"
@@ -132,13 +132,6 @@
         "rules": [
             {
                 "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "{\"value\":\"5000\"}",
-                "tot": "json"
-            },
-            {
-                "t": "set",
                 "p": "url",
                 "pt": "msg",
                 "to": "$globalContext(\"webhookURL\") & \"/discharge2\"",
@@ -193,13 +186,6 @@
         "rules": [
             {
                 "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "{\"value\":\"7000\"}",
-                "tot": "json"
-            },
-            {
-                "t": "set",
                 "p": "token",
                 "pt": "msg",
                 "to": "token",
@@ -228,10 +214,10 @@
         "type": "http request",
         "z": "5f20dbf7637ea30d",
         "name": "Call HA Selfconsume2 SH5RS",
-        "method": "use",
+        "method": "POST",
         "ret": "txt",
         "paytoqs": "body",
-        "url": "",
+        "url": "http://192.168.87.21:8123/api/webhook/selfconsume2",
         "tls": "",
         "persist": false,
         "proxy": "",
@@ -275,9 +261,7 @@
             [
                 "33fcaff553777da8"
             ],
-            [
-                "c3b123a6f227aaef"
-            ]
+            []
         ]
     },
     {
@@ -308,51 +292,6 @@
             [
                 "cd2f1caceebaf424"
             ],
-            [
-                "8598340eaf67cf16"
-            ]
-        ]
-    },
-    {
-        "id": "19d50970f208f152",
-        "type": "api-current-state",
-        "z": "5f20dbf7637ea30d",
-        "d": true,
-        "name": "Amber FIT",
-        "server": "4b37cada.edd1b4",
-        "version": 3,
-        "outputs": 1,
-        "halt_if": "",
-        "halt_if_type": "num",
-        "halt_if_compare": "is",
-        "entity_id": "sensor.118blakesleyrd_feed_in_price",
-        "state_type": "num",
-        "blockInputOverrides": false,
-        "outputProperties": [
-            {
-                "property": "fit",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "entityState"
-            },
-            {
-                "property": "fit",
-                "propertyType": "global",
-                "value": "",
-                "valueType": "entityState"
-            }
-        ],
-        "for": "0",
-        "forType": "num",
-        "forUnits": "minutes",
-        "override_topic": false,
-        "state_location": "payload",
-        "override_payload": "msg",
-        "entity_location": "data",
-        "override_data": "msg",
-        "x": 150,
-        "y": 100,
-        "wires": [
             []
         ]
     },
@@ -360,10 +299,10 @@
         "id": "a5bb07ed38a0dec0",
         "type": "inject",
         "z": "5f20dbf7637ea30d",
-        "name": "Every 5 minutes 6am - 11pm",
+        "name": "Every 5 minutes 1am - 11pm",
         "props": [],
         "repeat": "",
-        "crontab": "*/5 6-22 * * *",
+        "crontab": "*/5 1-22 * * *",
         "once": true,
         "onceDelay": "0.2",
         "topic": "",
@@ -371,9 +310,6 @@
         "y": 40,
         "wires": [
             [
-                "19d50970f208f152",
-                "dc62ca829fd6881f",
-                "0d37e851531f539d",
                 "ead56bc7384c7823"
             ]
         ]
@@ -407,6 +343,7 @@
         "id": "0f24950a3a281af1",
         "type": "api-call-service",
         "z": "5f20dbf7637ea30d",
+        "d": true,
         "name": "Msg Export 2",
         "server": "4b37cada.edd1b4",
         "version": 5,
@@ -484,15 +421,15 @@
         "id": "057d6737aaf19c18",
         "type": "inject",
         "z": "5f20dbf7637ea30d",
-        "name": "Every Min 1-7am",
+        "name": "Every 5 Min 1-7am",
         "props": [],
         "repeat": "",
-        "crontab": "*/1 2-7 * * *",
+        "crontab": "*/5 2-7 * * *",
         "once": true,
         "onceDelay": "4",
         "topic": "",
-        "x": 770,
-        "y": 980,
+        "x": 720,
+        "y": 1060,
         "wires": [
             [
                 "a87e28c40c4d4b03"
@@ -515,78 +452,8 @@
         "authType": "",
         "senderr": false,
         "headers": [],
-        "x": 1240,
-        "y": 880,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "dc62ca829fd6881f",
-        "type": "change",
-        "z": "5f20dbf7637ea30d",
-        "d": true,
-        "name": "Force Charge Slowly",
-        "rules": [
-            {
-                "t": "set",
-                "p": "forcechargePM1",
-                "pt": "global",
-                "to": "false",
-                "tot": "bool"
-            },
-            {
-                "t": "set",
-                "p": "forcechargePM2",
-                "pt": "global",
-                "to": "true",
-                "tot": "bool"
-            },
-            {
-                "t": "set",
-                "p": "forcechargebattlimitPM",
-                "pt": "global",
-                "to": "92",
-                "tot": "str"
-            },
-            {
-                "t": "set",
-                "p": "chargeslowly",
-                "pt": "global",
-                "to": "true",
-                "tot": "bool"
-            },
-            {
-                "t": "set",
-                "p": "sunnyweather",
-                "pt": "global",
-                "to": "false",
-                "tot": "bool"
-            },
-            {
-                "t": "set",
-                "p": "forcechargeAM1",
-                "pt": "global",
-                "to": "false",
-                "tot": "bool"
-            },
-            {
-                "t": "set",
-                "p": "forcechargeAM2",
-                "pt": "global",
-                "to": "false",
-                "tot": "bool"
-            },
-            {
-                "t": "set",
-                "p": "forcechargebattlimitAM",
-                "pt": "global",
-                "to": "30",
-                "tot": "str"
-            }
-        ],
-        "x": 180,
-        "y": 180,
+        "x": 1280,
+        "y": 940,
         "wires": [
             []
         ]
@@ -726,8 +593,8 @@
         "type": "function",
         "z": "5f20dbf7637ea30d",
         "name": "CheckPrice Afternoon",
-        "func": "// Read global variables\nlet cloudy = global.get(\"cloudy\");\nlet globalFit = global.get(\"fit\");\nlet exportbothfit = global.get(\"exportbothfit\");\nlet sellfit1 = global.get(\"sellfit1\");\n\n// API Call\nconst token = global.get('token');\nconst url = global.get('webhookURL');\nmsg.method = \"POST\";\n// Optional: add headers\nmsg.headers = {\n    Authorization: token,\n    \"Content-Type\": \"application/json\"\n};\n\n// Initialize all outputs\nlet msg1 = null, msg2 = null, msg3 = null;\n\nif (globalFit >= exportbothfit) {\n    msg1 = { ...msg, payload: { value: 5000 }, url: `${url}/discharge` };\n}\n\nif (globalFit >= 0.01) {\n    msg2 = { ...msg, url: `${url}/discharge2` };\n}\n\nif (globalFit < 0.01) {\n    msg3 = { ...msg };\n}\n\nreturn [msg1, msg2, msg3];\n",
-        "outputs": 3,
+        "func": "// Read global variables\nlet cloudy = global.get(\"cloudy\");\nlet globalFit = global.get(\"fit\");\nlet exportbothfit = global.get(\"exportbothfit\");\nlet sellfit1 = global.get(\"sellfit1\");\nlet maxdischargepower1 = global.get(\"maxdischargepower1\");\nlet maxdischargepower2 = global.get(\"maxdischargepower2\");\n\n// API Call\nconst token = global.get('token');\nconst url = global.get('webhookURL');\nmsg.method = \"POST\";\n// Optional: add headers\nmsg.headers = {\n    Authorization: token,\n    \"Content-Type\": \"application/json\"\n};\n\n// Initialize all outputs\nlet msg1 = null, msg2 = null, msg3 = null, msg4 = null;\n\nif (globalFit >= exportbothfit) {\n    msg1 = { ...msg, payload: { value: maxdischargepower1 }, url: `${url}/discharge` };\n    msg4 = { ...msg, payload: { value: maxdischargepower2 }, url: `${url}/discharge2` };\n}\n\nif (globalFit >= 0.01) {\n    msg2 = { ...msg };\n}\n\nif (globalFit < 0.01) {\n    msg3 = { ...msg };\n}\n\nreturn [msg1, msg2, msg3, msg4];\n",
+        "outputs": 4,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
@@ -738,8 +605,7 @@
         "wires": [
             [
                 "cb1923d07397e2e0",
-                "8b88c50487fb9855",
-                "cc9d9fcee1d1c230"
+                "8b88c50487fb9855"
             ],
             [
                 "cb1923d07397e2e0",
@@ -748,6 +614,10 @@
             [
                 "37dbae408d79ca75",
                 "42d80bd5ef39e196"
+            ],
+            [
+                "cc9d9fcee1d1c230",
+                "cb1923d07397e2e0"
             ]
         ]
     },
@@ -756,28 +626,24 @@
         "type": "function",
         "z": "5f20dbf7637ea30d",
         "name": "CheckPrice Evening",
-        "func": "const fit = global.get(\"fit\");\nconst batt1 = global.get(\"batt1\");\nconst batt2 = global.get(\"batt2\");\nconst limit1 = global.get(\"limit1\");\nconst limit2 = global.get(\"limit2\");\nconst exportbothfit = global.get(\"exportbothfit\");\nconst sellfit1 = global.get(\"sellfit1\");\nconst sellfit2 = global.get(\"sellfit2\");\n\n// API Call\nconst token = global.get('token');\nconst url = global.get('webhookURL');\nmsg.method = \"POST\";\n// Optional: add headers\nmsg.headers = {\n    Authorization: token,\n    \"Content-Type\": \"application/json\"\n};\n\n// Get current time\nconst now = new Date();\nconst hour = now.getHours();\n\nlet out1 = null;\nlet out2A1 = null;\nlet out2B1 = null;\nlet out2A2 = null;\nlet out2B2 = null;\n\nif (fit >= exportbothfit) {\n    out1 = msg;\n// Before 7pm and greater than sellfit2\n} else if (fit >= sellfit1 && hour >= 16 && hour<19) {\n    if (batt1 > limit1) {\n        out2A1 = msg;\n    } else {\n        out2B1 = { ...msg, payload: { value: \"selfconsume\" }, url: `${url}/selfconsume` };\n    }\n    if (batt2 > limit2) {\n        out2A2 = msg;\n    } else {\n        out2B2 = { ...msg, payload: { value: \"selfconsume\" }, url: `${url}/selfconsume2` };\n    }\n// After 6pm and greater than sellfit2\n} else if (fit >= sellfit2 && hour>=19) {\n    if (batt1 > limit1) {\n        out2A1 = msg;\n    } else {\n        out2B1 = { ...msg, payload: { value: \"selfconsume\" }, url: `${url}/selfconsume` };\n    }\n    if (batt2 > limit2) {\n        out2A2 = msg;\n    } else {\n        out2B2 = { ...msg, payload: { value: \"selfconsume\" }, url: `${url}/selfconsume2` };\n    }\n} else {\n    out2B1 = { ...msg, payload: { value: \"selfconsume\" }, url: `${url}/selfconsume` };\n    out2B2 = { ...msg, payload: { value: \"selfconsume\" }, url: `${url}/selfconsume` };\n}\n\nreturn [out1, out2A1, out2B1, out2A2, out2B2];\n",
-        "outputs": 5,
+        "func": "const fit = global.get(\"fit\");\nconst batt1 = global.get(\"batt1\");\nconst batt2 = global.get(\"batt2\");\nconst limit1 = global.get(\"limit1\");\nconst limit2 = global.get(\"limit2\");\nconst exportbothfit = global.get(\"exportbothfit\");\nconst sellfit1 = global.get(\"sellfit1\");\nconst sellfit2 = global.get(\"sellfit2\");\nlet maxdischargepower1 = global.get(\"maxdischargepower1\");\nlet maxdischargepower2 = global.get(\"maxdischargepower2\");\n\n// API Call\nconst token = global.get('token');\nconst url = global.get('webhookURL');\nmsg.method = \"POST\";\n// Optional: add headers\nmsg.headers = {\n    Authorization: token,\n    \"Content-Type\": \"application/json\"\n};\n\n// Get current time\nconst now = new Date();\nconst hour = now.getHours();\n\nlet out1 = null;\nlet out2 = null;\nlet out3 = null;\nlet out4 = null;\n\nif (fit >= exportbothfit) {\n    out1 = { ...msg, payload: { value: maxdischargepower1 }, url: `${url}/discharge` };\n    out2 = { ...msg, payload: { value: maxdischargepower2 }, url: `${url}/discharge2` };\n// Before 7pm and greater than sellfit2\n} else if (fit >= sellfit1 && hour >= 16 && hour<19) {\n    if (batt1 >= limit1) {\n        out1 = { ...msg, payload: { value: maxdischargepower1 }, url: `${url}/discharge` };\n    } else if (batt1 < limit1) {\n        out3 = { ...msg, payload: { value: \"selfconsume\" }, url: `${url}/selfconsume` };\n    }\n    if (batt2 >= limit2) {\n        out2 = { ...msg, payload: { value: maxdischargepower2 }, url: `${url}/discharge2` };\n    } else if (batt2 < limit2) {\n        out4 = { ...msg, payload: { value: \"selfconsume\" }, url: `${url}/selfconsume2` };\n    }\n// After 6pm and greater than sellfit2\n} else if (fit >= sellfit2 && hour>=19) {\n    if (batt1 >= limit1) {\n        out1 = { ...msg, payload: { value: maxdischargepower1 }, url: `${url}/discharge` };\n    } else if (batt1 < limit1) {\n        out3 = { ...msg, payload: { value: \"selfconsume\" }, url: `${url}/selfconsume` };\n    }\n    if (batt2 >= limit2) {\n        out2 = { ...msg, payload: { value: maxdischargepower2 }, url: `${url}/discharge2` };\n    } else if (batt2 < limit2) {\n        out4 = { ...msg, payload: { value: \"selfconsume\" }, url: `${url}/selfconsume2` };\n    }\n} else {\n    out3 = { ...msg, payload: { value: \"selfconsume\" }, url: `${url}/selfconsume` };\n    out4 = { ...msg, payload: { value: \"selfconsume\" }, url: `${url}/selfconsume2` };\n}\n\nreturn [out1, out2, out3, out4];\n",
+        "outputs": 4,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
         "x": 740,
-        "y": 580,
+        "y": 520,
         "wires": [
-            [
-                "20ce04c2cb8a709d",
-                "c19e3c791275b46d"
-            ],
             [
                 "20ce04c2cb8a709d"
             ],
             [
-                "c3b123a6f227aaef"
+                "c19e3c791275b46d"
             ],
             [
-                "c19e3c791275b46d"
+                "c3b123a6f227aaef"
             ],
             [
                 "8598340eaf67cf16"
@@ -789,8 +655,8 @@
         "type": "function",
         "z": "5f20dbf7637ea30d",
         "name": "CheckPrice Morning",
-        "func": "// Read global variables\nlet globalFit = global.get(\"fit\");\nlet exportbothfit = global.get(\"exportbothfit\");\nlet sellfit1 = global.get(\"sellfit1\");\nlet morningfitslow = global.get(\"morningfitslow\");\nlet morningfitsell = global.get(\"morningfitsell\");\n\nlet loadpower1 = global.get(\"loadpower1\");\nlet loadpower2 = global.get(\"loadpower2\");\nlet batt1 = global.get(\"batt1\");\nlet batt2 = global.get(\"batt2\");\nlet activepower1 = global.get(\"activepower1\");\nlet activepower2 = global.get(\"activepower2\");\nlet chargeslowly = global.get(\"chargeslowly\");\nlet sunnyweather = global.get(\"sunnyweather\");\n\n// Initialize all outputs\nlet msg1 = null, msg2 = null;\nlet msg3 = null;\n\n// API Call\nconst token = global.get('token');\nconst url = global.get('webhookURL');\nmsg.method = \"POST\";\n// Optional: add headers\nmsg.headers = {\n    Authorization: token,\n    \"Content-Type\": \"application/json\"\n};\n\n// Get current time\nconst now = new Date();\nconst hour = now.getHours();\nglobal.set(\"time\", hour);\n\nlet export1 = 5000;\nlet export2 = 5000;\nlet maxbatt1power1 = 10000;\nlet maxbatt1power2 = 5000;\n    \nif (batt1 < 6 && activepower1 > 500) {\n    // Discharge SH5RS\n    const dischargeDelta = Math.ceil(activepower1+100 / 100) * 100;\n    msg3 = { ...msg, payload: { value: dischargeDelta }, url: `${url}/discharge2` };\n} \n\nif (batt2 < 6 && activepower2 > 500) {\n    // Discharge SH10RS\n    const dischargeDelta = Math.ceil(activepower2 + 100 / 100) * 100;\n    msg2 = { ...msg, payload: { value: dischargeDelta }, url: `${url}/discharge` };\n} \n\nif (globalFit >= exportbothfit) {\n    if (batt1 > 30 && batt2 > 30) {\n        // Discharge both SH10RS + SH5RS\n        msg2 = { ...msg, payload: { value: 5000 }, url: `${url}/discharge` };\n        msg3 = { ...msg, payload: { value: 5000 }, url: `${url}/discharge2` };\n    }\n    if (batt1 > 10) {\n        // Discharge SH10RS\n        msg2 = { ...msg, payload: { value: 5000 }, url: `${url}/discharge` };\n    }\n    if (batt2 > 10) {\n        // Discharge SH5RS\n        msg3 = { ...msg, payload: { value: 5000 }, url: `${url}/discharge2` };\n    }\n}  \n\nif (globalFit < 0) {\n    export1 = 0;\n    export2 = 0;\n}\n\nif ((globalFit >= morningfitslow) && (chargeslowly || sunnyweather)) {\n    if (hour >= 7 && hour < 8) {\n        maxbatt1power1 = 2000;\n        maxbatt1power2 = 2000;\n    } else if (hour >= 8 && hour < 9) {\n        maxbatt1power1 = 3000;\n        maxbatt1power2 = 3000;\n    } else if (hour >= 9 && hour < 10) {\n        maxbatt1power1 = 6000;\n        maxbatt1power2 = 4000;\n    }\n}\n\nmsg1 = { ...msg, payload: { value1: maxbatt1power1, value2: maxbatt1power2, export1: export1, export2: export2 }, url: `${url}/battlimitall` };\n\nglobal.set(\"export1\", export1);\nglobal.set(\"export2\", export2);\nglobal.set(\"maxbatt1power1\", maxbatt1power1);\nglobal.set(\"maxbatt1power2\", maxbatt1power2);\n\nreturn [msg1, msg2, msg3];",
-        "outputs": 3,
+        "func": "// Read global variables\nlet globalFit = global.get(\"fit\");\nlet exportbothfit = global.get(\"exportbothfit\");\nlet sellfit1 = global.get(\"sellfit1\");\nlet morningfitsell = global.get(\"morningfitsell\");\nlet morningfitslow = global.get(\"slowfitmorning\");\n\nlet loadpower1 = global.get(\"loadpower1\");\nlet loadpower2 = global.get(\"loadpower2\");\nlet batt1 = global.get(\"batt1\");\nlet batt2 = global.get(\"batt2\");\nlet activepower1 = global.get(\"activepower1\");\nlet activepower2 = global.get(\"activepower2\");\nlet chargeslowly = global.get(\"chargeslowly\");\nlet sunnyweather = global.get(\"sunnyweather\");\nlet maxdischargepower1 = global.get(\"maxdischargepower1\");\nlet maxdischargepower2 = global.get(\"maxdischargepower2\");\n\n// Initialize all outputs\nlet msg1 = null, msg2 = null;\nlet msg3 = null, msg4 = null, msg5 = null;\n\n// API Call\nconst token = global.get('token');\nconst url = global.get('webhookURL');\nmsg.method = \"POST\";\n// Optional: add headers\nmsg.headers = {\n    Authorization: token,\n    \"Content-Type\": \"application/json\"\n};\n\n// Get current time\nconst now = new Date();\nconst hour = now.getHours();\nglobal.set(\"time\", hour);\n\nlet export1 = 5000;\nlet export2 = 5000;\nlet maxbatt1power1 = 10000;\nlet maxbatt1power2 = 5000;\n    \nif (batt1 < 6 && activepower1 > 500) {\n    // Discharge SH5RS\n    const dischargeDelta = Math.ceil(activepower1+100 / 100) * 100;\n    msg3 = { ...msg, payload: { value: dischargeDelta }, url: `${url}/discharge2` };\n} \n\nif (batt2 < 6 && activepower2 > 500) {\n    // Discharge SH10RS\n    const dischargeDelta = Math.ceil(activepower2 + 100 / 100) * 100;\n    msg2 = { ...msg, payload: { value: dischargeDelta }, url: `${url}/discharge` };\n} \n\nif (globalFit < morningfitsell) {\n    msg4 = { ...msg };\n    msg5 = { ...msg };\n}\n\nif (globalFit < 0) {\n    export1 = 0;\n    export2 = 0;\n}\n\nif (batt1 > 10 && globalFit >= morningfitsell) {\n    // Discharge SH10RS\n    msg2 = { ...msg, payload: { value: maxdischargepower1 }, url: `${url}/discharge` };\n}\nif (batt2 > 10 && globalFit >= morningfitsell) {\n    // Discharge SH5RS\n    msg3 = { ...msg, payload: { value: maxdischargepower2 }, url: `${url}/discharge2` };\n}\n\nif ((globalFit >= morningfitslow && globalFit < morningfitsell && (sunnyweather || chargeslowly))) {\n    if (hour >= 7 && hour < 8) {\n        maxbatt1power1 = 1000;\n        maxbatt1power2 = 1000;\n    } else if (hour >= 8 && hour < 9) {\n        maxbatt1power1 = 1500;\n        maxbatt1power2 = 1500;\n    } else if (hour >= 9 && hour < 10) {\n        maxbatt1power1 = 2500;\n        maxbatt1power2 = 2500;\n    } else if (hour >= 10 && hour < 11) {\n        maxbatt1power1 = 3000;\n        maxbatt1power2 = 3000;\n    }\n}\n\nmsg1 = { ...msg, payload: { value1: maxbatt1power1, value2: maxbatt1power2, export1: export1, export2: export2 }, url: `${url}/battlimitall` };\n\nmsg1.method = \"POST\";\n// Optional: add headers\nmsg1.headers = {\n    Authorization: token,\n    \"Content-Type\": \"application/json\"\n};\n\nglobal.set(\"export1\", export1);\nglobal.set(\"export2\", export2);\nglobal.set(\"maxbatt1power1\", maxbatt1power1);\nglobal.set(\"maxbatt1power2\", maxbatt1power2);\n\nreturn [msg1, msg2, msg3, msg4, msg5];",
+        "outputs": 5,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
@@ -800,15 +666,19 @@
         "y": 180,
         "wires": [
             [
-                "950fe2736fc7ed40",
-                "c3b123a6f227aaef",
-                "8598340eaf67cf16"
+                "950fe2736fc7ed40"
             ],
             [
                 "8b88c50487fb9855"
             ],
             [
                 "cc9d9fcee1d1c230"
+            ],
+            [
+                "c3b123a6f227aaef"
+            ],
+            [
+                "8598340eaf67cf16"
             ]
         ]
     },
@@ -817,15 +687,15 @@
         "type": "function",
         "z": "5f20dbf7637ea30d",
         "name": "Force Discharge Batt2 -> ActivePower1 Midnight",
-        "func": "// Get global variables\nconst batt1 = global.get(\"batt1\");\nconst batt2 = global.get(\"batt2\");\nconst loadpower1 = global.get(\"loadpower1\");\nconst loadpower2 = global.get(\"loadpower2\");\nconst activepower1 = global.get('activepower1');\nconst activepower2 = global.get('activepower2');\nconst fit = global.get('fit');\nconst morningfit = global.get('morningfitsell');\n\n// API Call\nconst token = global.get('token');\nconst url = global.get('webhookURL');\nmsg.method = \"POST\";\n// Optional: add headers\nmsg.headers = {\n    Authorization: token,\n    \"Content-Type\": \"application/json\"\n};\n\nconst delta = activepower1 + loadpower2 + 100;\nlet forcedischarge = null;\nlet exportlimit = { ...msg, payload: { value: 5000 }, url: `${token}/exportlimit2` };\n\nif (batt1 < 10 && batt2 > 10 ) {\n    if (activepower1 >0) {\n        const dischargeDelta = Math.ceil(delta / 100) * 100;\n        forcedischarge = { ...msg, payload: { value: dischargeDelta }, url: `${token}/discharge2` };\n        exportlimit = { ...msg, payload: { value: 5000 }, url: `${token}/exportlimit2` };\n        return [forcedischarge, exportlimit, null];\n    } else {\n        // Export limit 5000 and self consume\n        exportlimit = { ...msg, payload: { value: 5000 }, url: `${token}/exportlimit2` };\n        return [null, exportlimit, { ...msg, url: `${token}/selfconsume2`} ];\n    }\n}\n\n// Conditions not met\nreturn [null, exportlimit, { ...msg, url: `${token}/selfconsume2` }];\n",
+        "func": "// Get global variables\nconst batt1 = global.get(\"batt1\");\nconst batt2 = global.get(\"batt2\");\nconst loadpower1 = global.get(\"loadpower1\");\nconst loadpower2 = global.get(\"loadpower2\");\nconst activepower1 = global.get('activepower1');\nconst activepower2 = global.get('activepower2');\nconst fit = global.get('fit');\nconst morningfit = global.get('morningfitsell');\n\n// API Call\nconst token = global.get('token');\nconst url = global.get('webhookURL');\nmsg.method = \"POST\";\n// Optional: add headers\nmsg.headers = {\n    Authorization: token,\n    \"Content-Type\": \"application/json\"\n};\n\nconst delta = activepower1 + loadpower2 + 100;\nlet forcedischarge = null;\nlet exportlimit = { ...msg, payload: { value: 5000 }, url: `${token}/exportlimit2` };\n\nif (batt1 < 10 && batt2 > 5 ) {\n    if (activepower1 >100) {\n        const dischargeDelta = Math.ceil(delta / 100) * 100;\n        forcedischarge = { ...msg, payload: { value: dischargeDelta }, url: `${token}/discharge2` };\n        return [forcedischarge, exportlimit, null];\n    } else {\n        // self consume\n        return [null, exportlimit, { ...msg, url: `${token}/selfconsume2`} ];\n    }\n}\n\n// Conditions not met\nreturn [null, exportlimit, { ...msg, url: `${token}/selfconsume2` }];\n",
         "outputs": 3,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 830,
-        "y": 920,
+        "x": 790,
+        "y": 1000,
         "wires": [
             [
                 "e633424e17a643bd"
@@ -866,7 +736,6 @@
         "id": "a50f3b079536ec8a",
         "type": "api-call-service",
         "z": "5f20dbf7637ea30d",
-        "d": true,
         "name": "Export Batt Limit",
         "server": "4b37cada.edd1b4",
         "version": 5,
@@ -907,7 +776,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1100,
+        "x": 1120,
         "y": 420,
         "wires": [
             [
@@ -934,8 +803,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1100,
-        "y": 460,
+        "x": 1120,
+        "y": 480,
         "wires": [
             [
                 "7551839dbd987474"
@@ -993,13 +862,16 @@
                 "valueType": "entityState"
             }
         ],
-        "x": 760,
-        "y": 860,
+        "x": 560,
+        "y": 920,
         "wires": [
             [
-                "9622ed0e0f29ea42"
+                "9622ed0e0f29ea42",
+                "8477ec073a1f6426"
             ],
-            []
+            [
+                "640ea3021c57fe5d"
+            ]
         ]
     },
     {
@@ -1009,12 +881,12 @@
         "name": "",
         "lat": "-33.98025",
         "lon": "151.10884",
-        "startTime": "01:00",
-        "endTime": "08:00",
+        "startTime": "00:05",
+        "endTime": "07:00",
         "startOffset": 0,
         "endOffset": 0,
-        "x": 970,
-        "y": 860,
+        "x": 840,
+        "y": 940,
         "wires": [
             [
                 "a87e28c40c4d4b03"
@@ -1451,13 +1323,13 @@
         "name": "FIT Changed",
         "server": "4b37cada.edd1b4",
         "version": 5,
-        "outputs": 1,
+        "outputs": 2,
         "exposeAsEntityConfig": "",
         "entityId": "sensor.118blakesleyrd_feed_in_price",
         "entityIdType": "exact",
         "outputInitially": true,
         "stateType": "num",
-        "ifState": "",
+        "ifState": "0.2",
         "ifStateType": "num",
         "ifStateOperator": "gt",
         "outputOnlyOnStateChange": true,
@@ -1500,7 +1372,8 @@
         "wires": [
             [
                 "b026a673328d59a0"
-            ]
+            ],
+            []
         ]
     },
     {
@@ -1717,62 +1590,6 @@
         ]
     },
     {
-        "id": "0d37e851531f539d",
-        "type": "change",
-        "z": "5f20dbf7637ea30d",
-        "d": true,
-        "name": "Buy/Sell FIT",
-        "rules": [
-            {
-                "t": "set",
-                "p": "sellfit1",
-                "pt": "global",
-                "to": "0.25",
-                "tot": "str"
-            },
-            {
-                "t": "set",
-                "p": "sellfit2",
-                "pt": "global",
-                "to": "0.22",
-                "tot": "str"
-            },
-            {
-                "t": "set",
-                "p": "exportbothfit",
-                "pt": "global",
-                "to": "1.00",
-                "tot": "str"
-            },
-            {
-                "t": "set",
-                "p": "morningfitslow",
-                "pt": "global",
-                "to": "0.28",
-                "tot": "str"
-            },
-            {
-                "t": "set",
-                "p": "morningfitsell",
-                "pt": "global",
-                "to": "0.30",
-                "tot": "str"
-            },
-            {
-                "t": "set",
-                "p": "buyfit",
-                "pt": "global",
-                "to": "0.08",
-                "tot": "str"
-            }
-        ],
-        "x": 150,
-        "y": 140,
-        "wires": [
-            []
-        ]
-    },
-    {
         "id": "cc9d9fcee1d1c230",
         "type": "http request",
         "z": "5f20dbf7637ea30d",
@@ -1821,10 +1638,10 @@
         "type": "time-range-switch",
         "z": "5f20dbf7637ea30d",
         "name": "",
-        "lat": "",
-        "lon": "",
+        "lat": "-33.98025",
+        "lon": "151.10885",
         "startTime": "16:30",
-        "endTime": "22:00",
+        "endTime": "20:00",
         "startOffset": 0,
         "endOffset": 0,
         "x": 850,
@@ -2005,8 +1822,8 @@
         "authType": "",
         "senderr": false,
         "headers": [],
-        "x": 1220,
-        "y": 920,
+        "x": 1260,
+        "y": 980,
         "wires": [
             []
         ]
@@ -2016,7 +1833,7 @@
         "type": "function",
         "z": "5f20dbf7637ea30d",
         "name": "Force Charge AM",
-        "func": "// Get global variables\nconst batt1 = global.get(\"batt1\");\nconst batt2 = global.get(\"batt2\");\nconst loadpower1 = global.get(\"loadpower1\");\nconst loadpower2 = global.get(\"loadpower2\");\nconst activepower1 = global.get('activepower1');\nconst activepower2 = global.get('activepower2');\nconst fit = global.get('fit');\nconst morningfit = global.get('morningfitsell');\nconst buyfit = global.get('buyfit');\nconst forcechargemorning1 = global.get('forcechargemorning1');\nconst forcechargemorning2 = global.get('forcechargemorning2');\nconst forcechargebattlimitAM = global.get('forcechargebattlimitAM');\n\nlet forcecharge1 = null;\nlet forcecharge2 = null;\nlet selfconsume1 = null;\nlet selfconsume2 = null;\n\n// API Call\nconst token = global.get('token');\nconst url = global.get('webhookURL');\nmsg.method = \"POST\";\n// Optional: add headers\nmsg.headers = {\n    Authorization: token,\n    \"Content-Type\": \"application/json\"\n};\n\n\n// Condition check\nif (batt1 < forcechargebattlimitAM && fit < buyfit && forcechargemorning1) {\n    forcecharge1 = { ...msg, payload: { value: 4000 }, url: `${url}/charge` };\n} else if (batt1 > forcechargebattlimitAM) {\n    selfconsume1 = { ...msg, payload: { value: \"selfconsume\" }, url: `${url}/selfconsume` };\n}\nif (batt2 < forcechargebattlimitAM && fit < buyfit && forcechargemorning2) {\n    forcecharge2 = { ...msg, payload: { value: 3000 }, url: `${url}/charge2` };\n} else if (batt2 > forcechargebattlimitAM) {\n    selfconsume2 = { ...msg, payload: { value: \"selfconsume\" }, url: `${url}/selfconsume2` };\n}\nreturn [forcecharge1, forcecharge2, selfconsume1, selfconsume2];\n",
+        "func": "// Get global variables\nconst batt1 = global.get(\"batt1\");\nconst batt2 = global.get(\"batt2\");\nconst loadpower1 = global.get(\"loadpower1\");\nconst loadpower2 = global.get(\"loadpower2\");\nconst activepower1 = global.get('activepower1');\nconst activepower2 = global.get('activepower2');\nconst fit = global.get('fit');\nconst morningfit = global.get('morningfitsell');\nconst buyfit = global.get('buyfit');\nconst forcechargemorning1 = global.get('forcechargemorning1');\nconst forcechargemorning2 = global.get('forcechargemorning2');\nconst forcechargebattlimitAM = global.get('forcechargebattlimitAM');\n\nlet forcecharge1 = null;\nlet forcecharge2 = null;\nlet selfconsume1 = null;\nlet selfconsume2 = null;\n\n// API Call\nconst token = global.get('token');\nconst url = global.get('webhookURL');\nmsg.method = \"POST\";\n// Optional: add headers\nmsg.headers = {\n    Authorization: token,\n    \"Content-Type\": \"application/json\"\n};\n\n// Condition check\nif (batt1 <= forcechargebattlimitAM && fit <= buyfit && forcechargemorning1) {\n    forcecharge1 = { ...msg, payload: { value: 4000 }, url: `${url}/charge` };\n} else if (batt1 > forcechargebattlimitAM && activepower1>=0) {\n    selfconsume1 = { ...msg, payload: { value: \"selfconsume\" }, url: `${url}/selfconsume` };\n}\nif (batt2 <= forcechargebattlimitAM && fit <= buyfit && forcechargemorning2) {\n    forcecharge2 = { ...msg, payload: { value: 3000 }, url: `${url}/charge2` };\n} else if (batt2 > forcechargebattlimitAM && activepower2 >= 0) {\n    selfconsume2 = { ...msg, payload: { value: \"selfconsume\" }, url: `${url}/selfconsume2` };\n}\nreturn [forcecharge1, forcecharge2, selfconsume1, selfconsume2];\n",
         "outputs": 4,
         "timeout": 0,
         "noerr": 0,
@@ -2024,7 +1841,7 @@
         "finalize": "",
         "libs": [],
         "x": 750,
-        "y": 760,
+        "y": 780,
         "wires": [
             [
                 "4728cd0cce1bdb77"
@@ -2044,15 +1861,15 @@
         "id": "8e889be2f0a5809d",
         "type": "inject",
         "z": "5f20dbf7637ea30d",
-        "name": "Every 5 Min 2-5am",
+        "name": "Every 5 Min 2-6am",
         "props": [],
         "repeat": "",
-        "crontab": "*/1 2-4 * * *",
+        "crontab": "*/1 0-5 * * *",
         "once": true,
         "onceDelay": "4",
         "topic": "",
-        "x": 750,
-        "y": 680,
+        "x": 740,
+        "y": 720,
         "wires": [
             [
                 "957bf887092bb8e0"
@@ -2117,7 +1934,7 @@
             }
         ],
         "x": 110,
-        "y": 380,
+        "y": 260,
         "wires": [
             []
         ]
@@ -2180,7 +1997,7 @@
             }
         ],
         "x": 110,
-        "y": 420,
+        "y": 300,
         "wires": [
             []
         ]
@@ -2189,12 +2006,12 @@
         "id": "1e9241add92e9bbe",
         "type": "server-state-changed",
         "z": "5f20dbf7637ea30d",
-        "name": "morningfitsell",
+        "name": "slowfitmorning",
         "server": "4b37cada.edd1b4",
         "version": 5,
         "outputs": 1,
         "exposeAsEntityConfig": "",
-        "entityId": "input_number.sell_fit_morning",
+        "entityId": "input_number.slow_fit_morning",
         "entityIdType": "exact",
         "outputInitially": true,
         "stateType": "num",
@@ -2230,7 +2047,7 @@
                 "valueType": "triggerId"
             },
             {
-                "property": "morningfitsell",
+                "property": "slowfitmorning",
                 "propertyType": "global",
                 "value": "",
                 "valueType": "entityState"
@@ -2238,12 +2055,12 @@
             {
                 "property": "name",
                 "propertyType": "msg",
-                "value": "am_fit",
+                "value": "slow_am_fit",
                 "valueType": "str"
             }
         ],
-        "x": 130,
-        "y": 300,
+        "x": 140,
+        "y": 220,
         "wires": [
             []
         ]
@@ -2306,7 +2123,7 @@
             }
         ],
         "x": 130,
-        "y": 460,
+        "y": 340,
         "wires": [
             []
         ]
@@ -2369,70 +2186,7 @@
             }
         ],
         "x": 110,
-        "y": 500,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "55cc21ce77d9ba6f",
-        "type": "server-state-changed",
-        "z": "5f20dbf7637ea30d",
-        "name": "morningfitslow",
-        "server": "4b37cada.edd1b4",
-        "version": 5,
-        "outputs": 1,
-        "exposeAsEntityConfig": "",
-        "entityId": "input_number.sell_fit_morning",
-        "entityIdType": "exact",
-        "outputInitially": true,
-        "stateType": "num",
-        "ifState": "",
-        "ifStateType": "num",
-        "ifStateOperator": "gte",
-        "outputOnlyOnStateChange": true,
-        "for": "0",
-        "forType": "num",
-        "forUnits": "minutes",
-        "ignorePrevStateNull": false,
-        "ignorePrevStateUnknown": false,
-        "ignorePrevStateUnavailable": false,
-        "ignoreCurrentStateUnknown": false,
-        "ignoreCurrentStateUnavailable": false,
-        "outputProperties": [
-            {
-                "property": "payload",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "entityState"
-            },
-            {
-                "property": "data",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "eventData"
-            },
-            {
-                "property": "topic",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "triggerId"
-            },
-            {
-                "property": "morningfitslow",
-                "propertyType": "global",
-                "value": "",
-                "valueType": "entityState"
-            },
-            {
-                "property": "name",
-                "propertyType": "msg",
-                "value": "am_slow_fit",
-                "valueType": "str"
-            }
-        ],
-        "x": 140,
-        "y": 340,
+        "y": 380,
         "wires": [
             []
         ]
@@ -2935,8 +2689,8 @@
         "authType": "",
         "senderr": false,
         "headers": [],
-        "x": 1250,
-        "y": 960,
+        "x": 1290,
+        "y": 1020,
         "wires": [
             []
         ]
@@ -3088,8 +2842,8 @@
                 "tot": "str"
             }
         ],
-        "x": 150,
-        "y": 220,
+        "x": 130,
+        "y": 80,
         "wires": [
             []
         ]
@@ -3111,7 +2865,7 @@
         "senderr": false,
         "headers": [],
         "x": 1080,
-        "y": 740,
+        "y": 780,
         "wires": [
             []
         ]
@@ -3170,6 +2924,399 @@
         "x": 1900,
         "y": 680,
         "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8477ec073a1f6426",
+        "type": "time-range-switch",
+        "z": "5f20dbf7637ea30d",
+        "name": "",
+        "lat": "-33.98025",
+        "lon": "151.10884",
+        "startTime": "23:00",
+        "endTime": "23:59",
+        "startOffset": 0,
+        "endOffset": 0,
+        "x": 820,
+        "y": 900,
+        "wires": [
+            [
+                "a87e28c40c4d4b03"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "88b25b78d0b5c9a6",
+        "type": "server-state-changed",
+        "z": "5f20dbf7637ea30d",
+        "name": "morningfitsell",
+        "server": "4b37cada.edd1b4",
+        "version": 5,
+        "outputs": 1,
+        "exposeAsEntityConfig": "",
+        "entityId": "input_number.sell_fit_morning",
+        "entityIdType": "exact",
+        "outputInitially": true,
+        "stateType": "num",
+        "ifState": "",
+        "ifStateType": "num",
+        "ifStateOperator": "gte",
+        "outputOnlyOnStateChange": true,
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": false,
+        "ignoreCurrentStateUnavailable": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            },
+            {
+                "property": "morningfitsell",
+                "propertyType": "global",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "name",
+                "propertyType": "msg",
+                "value": "am_fit",
+                "valueType": "str"
+            }
+        ],
+        "x": 130,
+        "y": 180,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d94fe707ba236534",
+        "type": "server-state-changed",
+        "z": "5f20dbf7637ea30d",
+        "name": "maxdischargepower1",
+        "server": "4b37cada.edd1b4",
+        "version": 5,
+        "outputs": 1,
+        "exposeAsEntityConfig": "",
+        "entityId": "input_number.maxdischargepower1",
+        "entityIdType": "exact",
+        "outputInitially": true,
+        "stateType": "num",
+        "ifState": "",
+        "ifStateType": "num",
+        "ifStateOperator": "gte",
+        "outputOnlyOnStateChange": true,
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": false,
+        "ignoreCurrentStateUnavailable": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            },
+            {
+                "property": "maxdischargepower1",
+                "propertyType": "global",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "name",
+                "propertyType": "msg",
+                "value": "maxdischargepower1",
+                "valueType": "str"
+            }
+        ],
+        "x": 160,
+        "y": 440,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "09ef4ead057daa59",
+        "type": "server-state-changed",
+        "z": "5f20dbf7637ea30d",
+        "name": "maxdischargepower2",
+        "server": "4b37cada.edd1b4",
+        "version": 5,
+        "outputs": 1,
+        "exposeAsEntityConfig": "",
+        "entityId": "input_number.maxdischargepower2",
+        "entityIdType": "exact",
+        "outputInitially": true,
+        "stateType": "num",
+        "ifState": "",
+        "ifStateType": "num",
+        "ifStateOperator": "gte",
+        "outputOnlyOnStateChange": true,
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": false,
+        "ignoreCurrentStateUnavailable": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            },
+            {
+                "property": "maxdischargepower2",
+                "propertyType": "global",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "name",
+                "propertyType": "msg",
+                "value": "maxdischargepower2",
+                "valueType": "str"
+            }
+        ],
+        "x": 160,
+        "y": 500,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "2958a9254f9e5924",
+        "type": "inject",
+        "z": "5f20dbf7637ea30d",
+        "name": "Once at 6.08",
+        "props": [],
+        "repeat": "",
+        "crontab": "05 06 * * *",
+        "once": true,
+        "onceDelay": "2",
+        "topic": "",
+        "x": 460,
+        "y": 700,
+        "wires": [
+            [
+                "f40b8ba1e9c3721f"
+            ]
+        ]
+    },
+    {
+        "id": "b7d7aa80b8a665af",
+        "type": "inject",
+        "z": "5f20dbf7637ea30d",
+        "name": "Once at 14:58",
+        "props": [],
+        "repeat": "",
+        "crontab": "57 14 * * *",
+        "once": true,
+        "onceDelay": "2",
+        "topic": "",
+        "x": 460,
+        "y": 620,
+        "wires": [
+            [
+                "f40b8ba1e9c3721f"
+            ]
+        ]
+    },
+    {
+        "id": "3e1f587966d476b0",
+        "type": "inject",
+        "z": "5f20dbf7637ea30d",
+        "name": "Once at 19:02",
+        "props": [],
+        "repeat": "",
+        "crontab": "02 19 * * *",
+        "once": true,
+        "onceDelay": "2",
+        "topic": "",
+        "x": 460,
+        "y": 660,
+        "wires": [
+            [
+                "f40b8ba1e9c3721f"
+            ]
+        ]
+    },
+    {
+        "id": "f40b8ba1e9c3721f",
+        "type": "change",
+        "z": "5f20dbf7637ea30d",
+        "name": "SelfConsume All",
+        "rules": [
+            {
+                "t": "set",
+                "p": "url",
+                "pt": "msg",
+                "to": "$globalContext(\"webhookURL\") & \"/selfconsume2\"",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 780,
+        "y": 640,
+        "wires": [
+            [
+                "c3b123a6f227aaef",
+                "8598340eaf67cf16"
+            ]
+        ]
+    },
+    {
+        "id": "b8cad7b23e957c10",
+        "type": "inject",
+        "z": "5f20dbf7637ea30d",
+        "name": "Once at 8.38",
+        "props": [],
+        "repeat": "",
+        "crontab": "38 08 * * *",
+        "once": true,
+        "onceDelay": "2",
+        "topic": "",
+        "x": 460,
+        "y": 580,
+        "wires": [
+            [
+                "f40b8ba1e9c3721f"
+            ]
+        ]
+    },
+    {
+        "id": "a1184c859ac10daf",
+        "type": "server-state-changed",
+        "z": "5f20dbf7637ea30d",
+        "name": "FIT Changed",
+        "server": "4b37cada.edd1b4",
+        "version": 5,
+        "outputs": 2,
+        "exposeAsEntityConfig": "",
+        "entityId": "sensor.118blakesleyrd_feed_in_price",
+        "entityIdType": "exact",
+        "outputInitially": true,
+        "stateType": "num",
+        "ifState": "buyfit",
+        "ifStateType": "global",
+        "ifStateOperator": "lte",
+        "outputOnlyOnStateChange": true,
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": false,
+        "ignoreCurrentStateUnavailable": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            },
+            {
+                "property": "fit",
+                "propertyType": "global",
+                "value": "",
+                "valueType": "entityState"
+            }
+        ],
+        "x": 510,
+        "y": 780,
+        "wires": [
+            [
+                "640ea3021c57fe5d"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "640ea3021c57fe5d",
+        "type": "time-range-switch",
+        "z": "5f20dbf7637ea30d",
+        "name": "",
+        "lat": "",
+        "lon": "",
+        "startTime": "02:00",
+        "endTime": "06:00",
+        "startOffset": 0,
+        "endOffset": 0,
+        "x": 640,
+        "y": 840,
+        "wires": [
+            [
+                "957bf887092bb8e0"
+            ],
             []
         ]
     },
