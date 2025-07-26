@@ -1,0 +1,123 @@
+input_number:
+  sell_fit_morning:
+    name: Selling FIT Morning
+    min: 0.01
+    max: 0.50
+    step: 0.01
+    unit_of_measurement: "$"
+    mode: slider
+    initial: 0.20
+
+  sell_fit_evening1:
+    name: Selling FIT Evening 1
+    min: 0.01
+    max: 1.00
+    step: 0.01
+    unit_of_measurement: "$"
+    mode: slider
+    initial: 0.25
+
+  sell_fit_evening2:
+    name: Selling FIT Evening 2
+    min: 0.01
+    max: 1.00
+    step: 0.01
+    unit_of_measurement: "$"
+    mode: slider
+    initial: 0.22
+
+  sell_fit_all:
+    name: Selling FIT Export All
+    min: 0.30
+    max: 5.00
+    step: 0.10
+    unit_of_measurement: "$"
+    mode: slider
+    initial: 1.00
+
+  buy_fit_for_charging:
+    name: Buying FIT for Force Charging
+    min: -0.05
+    max: 0.20
+    step: 0.01
+    unit_of_measurement: "$"
+    mode: slider
+    initial: 0.07
+
+  forcechargebattlimit_am:
+    name: Force Charge Batt Limit AM
+    min: 1
+    max: 100
+    step: 1
+    unit_of_measurement: "%"
+    mode: slider
+    initial: 30
+
+  forcechargebattlimit_pm:
+    name: Force Charge Batt Limit PM
+    min: 1
+    max: 100
+    step: 1
+    unit_of_measurement: "%"
+    mode: slider
+    initial: 92
+
+  forcedischargebattlimit1:
+    name: Force Discharge Batt Limit 1
+    min: 1
+    max: 100
+    step: 1
+    unit_of_measurement: "%"
+    mode: slider
+    initial: 60
+
+  forcedischargebattlimit2:
+    name: Force Discharge Batt Limit 2
+    min: 1
+    max: 100
+    step: 1
+    unit_of_measurement: "%"
+    mode: slider
+    initial: 40
+
+  forcedischargebattlimit3:
+    name: Force Discharge Batt Limit 3
+    min: 1
+    max: 100
+    step: 1
+    unit_of_measurement: "%"
+    mode: slider
+    initial: 40
+
+input_boolean:
+  force_charge_enable_am1:
+    name: Force Charge Enable AM 1
+    initial: false
+
+  force_charge_enable_am2:
+    name: Force Charge Enable AM 2
+    initial: false
+
+  force_charge_enable_am3:
+    name: Force Charge Enable AM 3
+    initial: false
+
+  force_charge_enable_pm1:
+    name: Force Charge Enable PM 1
+    initial: true
+
+  force_charge_enable_pm2:
+    name: Force Charge Enable PM 2
+    initial: true
+
+  force_charge_enable_pm3:
+    name: Force Charge Enable PM 3
+    initial: true
+
+  charge_slowly:
+    name: Charge Slowly
+    initial: true
+
+  sunny_weather:
+    name: Sunny Weather
+    initial: false

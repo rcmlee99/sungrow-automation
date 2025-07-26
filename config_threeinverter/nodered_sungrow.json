@@ -1,0 +1,3468 @@
+[
+    {
+        "id": "5f20dbf7637ea30d",
+        "type": "tab",
+        "label": "Sungrow",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "dbda2ed81cdc31ba",
+        "type": "inject",
+        "z": "5f20dbf7637ea30d",
+        "name": "Every 5 Min 7-10am",
+        "props": [],
+        "repeat": "",
+        "crontab": "*/5 7-9 * * *",
+        "once": true,
+        "onceDelay": "2",
+        "topic": "",
+        "x": 500,
+        "y": 260,
+        "wires": [
+            [
+                "b026a673328d59a0"
+            ]
+        ]
+    },
+    {
+        "id": "92b50c087fe8cda8",
+        "type": "inject",
+        "z": "5f20dbf7637ea30d",
+        "name": "Every 5 Min 5-9pm",
+        "props": [],
+        "repeat": "",
+        "crontab": "*/5 17-20 * * *",
+        "once": true,
+        "onceDelay": "2",
+        "topic": "",
+        "x": 780,
+        "y": 780,
+        "wires": [
+            [
+                "d473c1dc91dbcee9"
+            ]
+        ]
+    },
+    {
+        "id": "081982bd2546d29b",
+        "type": "inject",
+        "z": "5f20dbf7637ea30d",
+        "name": "Every 5 Min 11am-4pm",
+        "props": [],
+        "repeat": "",
+        "crontab": "*/5 10-15 * * *",
+        "once": true,
+        "onceDelay": "2",
+        "topic": "",
+        "x": 790,
+        "y": 420,
+        "wires": [
+            [
+                "aaa35f7148e8472b",
+                "cb1923d07397e2e0"
+            ]
+        ]
+    },
+    {
+        "id": "cb1923d07397e2e0",
+        "type": "change",
+        "z": "5f20dbf7637ea30d",
+        "name": "Set ExportLimit RL 5kW",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"value\":\"5000\"}",
+                "tot": "json"
+            },
+            {
+                "t": "set",
+                "p": "url",
+                "pt": "msg",
+                "to": "$globalContext(\"webhookURL\") & \"/exportlimit\"",
+                "tot": "str"
+            }
+        ],
+        "x": 1370,
+        "y": 300,
+        "wires": [
+            [
+                "b29bd09632603e03"
+            ]
+        ]
+    },
+    {
+        "id": "37dbae408d79ca75",
+        "type": "change",
+        "z": "5f20dbf7637ea30d",
+        "name": "Set ExportLimit Zero",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"value\":\"0\"}",
+                "tot": "json"
+            },
+            {
+                "t": "set",
+                "p": "url",
+                "pt": "msg",
+                "to": "$globalContext(\"webhookURL\") & \"/exportlimit\"",
+                "tot": "jsonata"
+            }
+        ],
+        "x": 1360,
+        "y": 340,
+        "wires": [
+            [
+                "b29bd09632603e03"
+            ]
+        ]
+    },
+    {
+        "id": "cd2f1caceebaf424",
+        "type": "change",
+        "z": "5f20dbf7637ea30d",
+        "name": "Discharge 5kW SH5RS",
+        "rules": [
+            {
+                "t": "set",
+                "p": "url",
+                "pt": "msg",
+                "to": "$globalContext(\"webhookURL\") & \"/discharge2\"",
+                "tot": "jsonata"
+            },
+            {
+                "t": "set",
+                "p": "token",
+                "pt": "msg",
+                "to": "token",
+                "tot": "global"
+            }
+        ],
+        "x": 1610,
+        "y": 900,
+        "wires": [
+            [
+                "0f24950a3a281af1",
+                "3bf1f759f8432bda"
+            ]
+        ]
+    },
+    {
+        "id": "8327ea7eb9d003ac",
+        "type": "http request",
+        "z": "5f20dbf7637ea30d",
+        "name": "Call HA Selfconsume SH10RS",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "body",
+        "url": "http://192.168.87.21:8123/api/webhook/selfconsume",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 1410,
+        "y": 740,
+        "wires": [
+            [
+                "93b6742a27351ab1"
+            ]
+        ]
+    },
+    {
+        "id": "33fcaff553777da8",
+        "type": "change",
+        "z": "5f20dbf7637ea30d",
+        "name": "Discharge 7kW SH10RS",
+        "rules": [
+            {
+                "t": "set",
+                "p": "token",
+                "pt": "msg",
+                "to": "token",
+                "tot": "global"
+            },
+            {
+                "t": "set",
+                "p": "url",
+                "pt": "msg",
+                "to": "$globalContext(\"webhookURL\") & \"/discharge\"",
+                "tot": "jsonata",
+                "dc": true
+            }
+        ],
+        "x": 1610,
+        "y": 860,
+        "wires": [
+            [
+                "42e8fe1f90d58fa8",
+                "3bf1f759f8432bda"
+            ]
+        ]
+    },
+    {
+        "id": "7551839dbd987474",
+        "type": "http request",
+        "z": "5f20dbf7637ea30d",
+        "name": "Call HA Selfconsume2 SH5RS",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "body",
+        "url": "http://192.168.87.21:8123/api/webhook/selfconsume2",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 1410,
+        "y": 780,
+        "wires": [
+            [
+                "232ec8aa4026f90e"
+            ]
+        ]
+    },
+    {
+        "id": "20ce04c2cb8a709d",
+        "type": "switch",
+        "z": "5f20dbf7637ea30d",
+        "name": "Battery Check 1",
+        "property": "batt1",
+        "propertyType": "global",
+        "rules": [
+            {
+                "t": "gte",
+                "v": "limit1",
+                "vt": "global"
+            },
+            {
+                "t": "lt",
+                "v": "limit1",
+                "vt": "global"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 1360,
+        "y": 860,
+        "wires": [
+            [
+                "33fcaff553777da8"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "c19e3c791275b46d",
+        "type": "switch",
+        "z": "5f20dbf7637ea30d",
+        "name": "Battery Check 2",
+        "property": "batt2",
+        "propertyType": "global",
+        "rules": [
+            {
+                "t": "gte",
+                "v": "limit2",
+                "vt": "global"
+            },
+            {
+                "t": "lt",
+                "v": "limit2",
+                "vt": "global"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 1360,
+        "y": 900,
+        "wires": [
+            [
+                "cd2f1caceebaf424"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "a5bb07ed38a0dec0",
+        "type": "inject",
+        "z": "5f20dbf7637ea30d",
+        "name": "Every 5 minutes 1am - 11pm",
+        "props": [],
+        "repeat": "",
+        "crontab": "*/5 1-22 * * *",
+        "once": true,
+        "onceDelay": "0.2",
+        "topic": "",
+        "x": 210,
+        "y": 240,
+        "wires": [
+            [
+                "ead56bc7384c7823"
+            ]
+        ]
+    },
+    {
+        "id": "42e8fe1f90d58fa8",
+        "type": "api-call-service",
+        "z": "5f20dbf7637ea30d",
+        "name": "Msg Export 1",
+        "server": "4b37cada.edd1b4",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "notify",
+        "service": "mobile_app_zee97max",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [],
+        "data": "{\"message\":\"Batt {{global.batt1}}% Limit {{global.limit1}}% Price {{global.fit}}c Meter {{global.activepower1}}W Load {{global.loadpower1}}W DC {{global.dcpower1}}W\",\"title\":\"Export 1\"}",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1880,
+        "y": 840,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "0f24950a3a281af1",
+        "type": "api-call-service",
+        "z": "5f20dbf7637ea30d",
+        "d": true,
+        "name": "Msg Export 2",
+        "server": "4b37cada.edd1b4",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "notify",
+        "service": "mobile_app_zee97max",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [],
+        "data": "{\"message\":\"Batt {{global.batt2}}% Limit {{global.limit2}}% Price {{global.fit}}c Meter {{global.activepower1}}W Load {{global.loadpower1}}W DC {{global.dcpower1}}W \",\"title\":\"Export 2\"}",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1880,
+        "y": 920,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "232ec8aa4026f90e",
+        "type": "api-call-service",
+        "z": "5f20dbf7637ea30d",
+        "d": true,
+        "name": "Msg Selfconsume 2",
+        "server": "4b37cada.edd1b4",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "notify",
+        "service": "mobile_app_zee97max",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [],
+        "data": "{\"message\":\"Batt {{global.batt2}}% Price {{global.fit}}c Meter {{global.activepower2}}W Load {{global.loadpower2}}W DC {{global.dcpower2}}W\",\"title\":\"Self consume 2\"}",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1680,
+        "y": 780,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "93b6742a27351ab1",
+        "type": "api-call-service",
+        "z": "5f20dbf7637ea30d",
+        "d": true,
+        "name": "Msg Selfconsume 1",
+        "server": "4b37cada.edd1b4",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "notify",
+        "service": "mobile_app_zee97max",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [],
+        "data": "{\"message\":\"Batt {{global.batt1}}% Price {{global.fit}}c Meter {{global.activepower1}}W Load {{global.loadpower1}}W DC {{global.dcpower1}}W\",\"title\":\"Self consume 1\"}",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1680,
+        "y": 740,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e633424e17a643bd",
+        "type": "http request",
+        "z": "5f20dbf7637ea30d",
+        "name": "Call HA Discharge2 SH5RS",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "body",
+        "url": "http://192.168.87.21:8123/api/webhook/discharge2",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 1300,
+        "y": 1140,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "44960d37025654c1",
+        "type": "function",
+        "z": "5f20dbf7637ea30d",
+        "name": "ForceCharge 12-3pm",
+        "func": "const forceCharge1 = global.get('forcechargePM1');\nconst forceCharge2 = global.get('forcechargePM2');\nconst forcechargebattlimit = global.get('forcechargebattlimitPM');\n\nconst fit = global.get('fit');\nconst batt1 = global.get('batt1');\nconst batt2 = global.get('batt2');\nconst activepower1 = global.get('activepower1');\nconst activepower2 = global.get('activepower2');\nconst loadpower1 = global.get('loadpower1');\nconst loadpower2 = global.get('loadpower2');\nconst dcpower1 = global.get('dcpower1');\nconst dcpower2 = global.get('dcpower2');\nconst deltadc1 = dcpower1-loadpower1;\nconst deltadc2 = dcpower2-loadpower2;\n\nlet out1 = null;\nlet out2 = null;\nlet out3 = null;\nlet out4 = null;\nlet out5 = null;\n\n// API Call\nconst token = global.get('token');\nconst url = global.get('webhookURL');\nmsg.method = \"POST\";\n// Optional: add headers\nmsg.headers = {\n    Authorization: token,\n    \"Content-Type\": \"application/json\"\n};\n\n// Get current time\nconst now = new Date();\nconst hour = now.getHours();\nglobal.set(\"time\", hour);\n\nif (hour >= 12 && hour<15) {\n    if (batt1 < forcechargebattlimit && forceCharge1) {\n        out1 = { ...msg, payload: { value: \"5000\" }, url: `${url}/charge` };\n    } else {\n        out3 = { ...msg, payload: { value: \"selfconsume\" }, url: `${url}/selfconsume` };\n    }\n    if (batt2 < forcechargebattlimit && forceCharge2) {\n        out2 = { ...msg, payload: { value: \"5000\" }, url: `${url}/charge2` };\n    } else {\n        out4 = { ...msg, payload: { value: \"selfconsume\" }, url: `${url}/selfconsume2` };\n    }\n\n    let export1 = fit>0 ? 3500 : 0;\n    let export2 = fit>0 ? 3500 : 0;\n    let maxbatt1 = 10000;\n    let maxbatt2 = 5000;\n    // deltadc1 = dcpower1-loadpower1 to override -ve fit\n    if (deltadc1 > 200 && batt2 < forcechargebattlimit && batt1 > forcechargebattlimit) {\n        if (fit>0) {\n            export1 = 5000;\n        } else {\n            export1 = Math.ceil(activepower2 / 100) * 100;\n        }\n        if (batt1 >= 88) {\n            maxbatt1 = 1000;\n        } else if (batt1 >= 80) {\n            maxbatt1 = Math.ceil(activepower1 / 100) * 100;\n        }\n    }\n    // deltadc2 = dcpower2-loadpower2 to override -ve fit\n    if (deltadc2 > 200 && batt1 < forcechargebattlimit && batt2 > forcechargebattlimit) {\n        if (fit > 0) {\n            export2 = 5000;\n        } else {\n            export2 = dcpower1;\n        }\n        if (batt2 >= 88) {\n            maxbatt2 = 1000;\n        } else if (batt2 >= 80) {\n            maxbatt2 = 2000;\n        }\n    }\n    out5 = { ...msg, payload: { value1: maxbatt1, value2: maxbatt2, export1: export1, export2: export2 }, url: `${url}/battlimitall` };\n\n    const limit1 = 5000;\n    const limit2 = 5000;\n    if (activepower1 > limit1) {\n        const deltamax1 = limit1 + dcpower1 - loadpower1; \n        const maxforce1 = Math.ceil(deltamax1 / 100) * 100;\n        out1 = { ...msg, payload: { value: maxforce1 }, url: `${url}/charge` };\n    }\n    if (activepower2 > limit2) {\n        const deltamax2 = limit2 + dcpower2 - loadpower2;\n        const maxforce2 = Math.ceil(deltamax2 / 100) * 100;\n        out2 = { ...msg, payload: { value: maxforce2 }, url: `${url}/charge2` };\n    }\n\n} else if (hour >= 12 && hour < 15) {\n    out3 = { ...msg, payload: { value: \"selfconsume\" }, url: `${url}/selfconsume` };\n    out4 = { ...msg, payload: { value: \"selfconsume\" }, url: `${url}/selfconsume2` };\n}\n\nreturn [out1, out2, out3, out4, out5];\n",
+        "outputs": 5,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1380,
+        "y": 660,
+        "wires": [
+            [
+                "e55cb8303d5b5007"
+            ],
+            [
+                "346b29faaad8a91a"
+            ],
+            [
+                "8327ea7eb9d003ac"
+            ],
+            [
+                "7551839dbd987474"
+            ],
+            [
+                "e2f00ef4d19e5e6d"
+            ]
+        ]
+    },
+    {
+        "id": "e55cb8303d5b5007",
+        "type": "http request",
+        "z": "5f20dbf7637ea30d",
+        "name": "Call HA ForceCharge ",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "body",
+        "url": "http://192.168.87.21:8123/api/webhook/charge",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 1660,
+        "y": 580,
+        "wires": [
+            [
+                "0f39e763bc51d990"
+            ]
+        ]
+    },
+    {
+        "id": "346b29faaad8a91a",
+        "type": "http request",
+        "z": "5f20dbf7637ea30d",
+        "name": "Call HA ForceCharge SH5RS",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "body",
+        "url": "http://192.168.87.21:8123/api/webhook/charge2",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 1680,
+        "y": 620,
+        "wires": [
+            [
+                "09638d5d9746e4d5"
+            ]
+        ]
+    },
+    {
+        "id": "0f39e763bc51d990",
+        "type": "api-call-service",
+        "z": "5f20dbf7637ea30d",
+        "d": true,
+        "name": "Force Charge 1",
+        "server": "4b37cada.edd1b4",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "notify",
+        "service": "mobile_app_zee97max",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [],
+        "data": "{\"message\":\"Batt {{global.batt1}}% Meter {{global.activepower1}}W\",\"title\":\"Force Charge 1\"}",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1960,
+        "y": 580,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "09638d5d9746e4d5",
+        "type": "api-call-service",
+        "z": "5f20dbf7637ea30d",
+        "d": true,
+        "name": "Force Charge 2",
+        "server": "4b37cada.edd1b4",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "notify",
+        "service": "mobile_app_zee97max",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [],
+        "data": "{\"message\":\"Batt {{global.batt2}}% Meter {{global.activepower2}}W\",\"title\":\"Force Charge 2\"}",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1960,
+        "y": 620,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "aaa35f7148e8472b",
+        "type": "function",
+        "z": "5f20dbf7637ea30d",
+        "name": "CheckPrice Afternoon",
+        "func": "// Read global variables\nlet cloudy = global.get(\"cloudy\");\nlet globalFit = global.get(\"fit\");\nlet exportbothfit = global.get(\"exportbothfit\");\nlet sellfit1 = global.get(\"sellfit1\");\nlet maxdischargepower1 = global.get(\"maxdischargepower1\");\nlet maxdischargepower2 = global.get(\"maxdischargepower2\");\n\n// API Call\nconst token = global.get('token');\nconst url = global.get('webhookURL');\nmsg.method = \"POST\";\n// Optional: add headers\nmsg.headers = {\n    Authorization: token,\n    \"Content-Type\": \"application/json\"\n};\n\n// Initialize all outputs\nlet msg1 = null, msg2 = null, msg3 = null, msg4 = null;\n\nif (globalFit >= exportbothfit) {\n    msg1 = { ...msg, payload: { value: maxdischargepower1 }, url: `${url}/discharge` };\n    msg4 = { ...msg, payload: { value: maxdischargepower2 }, url: `${url}/discharge2` };\n}\n\nif (globalFit >= 0.01) {\n    msg2 = { ...msg };\n}\n\nif (globalFit < 0.01) {\n    msg3 = { ...msg };\n}\n\nreturn [msg1, msg2, msg3, msg4];\n",
+        "outputs": 4,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 780,
+        "y": 520,
+        "wires": [
+            [
+                "cb1923d07397e2e0",
+                "8b88c50487fb9855"
+            ],
+            [
+                "cb1923d07397e2e0",
+                "42d80bd5ef39e196"
+            ],
+            [
+                "37dbae408d79ca75",
+                "42d80bd5ef39e196"
+            ],
+            [
+                "cc9d9fcee1d1c230",
+                "cb1923d07397e2e0"
+            ]
+        ]
+    },
+    {
+        "id": "d473c1dc91dbcee9",
+        "type": "function",
+        "z": "5f20dbf7637ea30d",
+        "name": "CheckPrice Evening",
+        "func": "const fit = global.get(\"fit\");\nconst batt1 = global.get(\"batt1\");\nconst batt2 = global.get(\"batt2\");\nconst limit1 = global.get(\"limit1\");\nconst limit2 = global.get(\"limit2\");\nconst exportbothfit = global.get(\"exportbothfit\");\nconst sellfit1 = global.get(\"sellfit1\");\nconst sellfit2 = global.get(\"sellfit2\");\nlet maxdischargepower1 = global.get(\"maxdischargepower1\");\nlet maxdischargepower2 = global.get(\"maxdischargepower2\");\n\n// API Call\nconst token = global.get('token');\nconst url = global.get('webhookURL');\nmsg.method = \"POST\";\n// Optional: add headers\nmsg.headers = {\n    Authorization: token,\n    \"Content-Type\": \"application/json\"\n};\n\n// Get current time\nconst now = new Date();\nconst hour = now.getHours();\n\nlet out1 = null;\nlet out2 = null;\nlet out3 = null;\nlet out4 = null;\n\nif (fit >= exportbothfit) {\n    if (fit>=15.5) {\n        out1 = { ...msg, payload: { value: 7000 }, url: `${url}/discharge` };\n        out2 = { ...msg, payload: { value: 5000 }, url: `${url}/discharge2` };\n    } else {\n        out1 = { ...msg, payload: { value: maxdischargepower1 }, url: `${url}/discharge` };\n        out2 = { ...msg, payload: { value: maxdischargepower2 }, url: `${url}/discharge2` };\n    }\n// Before 6pm and greater than sellfit2\n} else if (fit >= sellfit1 && hour >= 16 && hour<18) {\n    if (batt1 >= limit1) {\n        out1 = { ...msg, payload: { value: maxdischargepower1 }, url: `${url}/discharge` };\n    } else if (batt1 < limit1) {\n        out3 = { ...msg, payload: { value: \"selfconsume\" }, url: `${url}/selfconsume` };\n    }\n    if (batt2 >= limit2) {\n        out2 = { ...msg, payload: { value: maxdischargepower2 }, url: `${url}/discharge2` };\n    } else if (batt2 < limit2) {\n        out4 = { ...msg, payload: { value: \"selfconsume\" }, url: `${url}/selfconsume2` };\n    }\n// After 6pm and greater than sellfit2\n} else if (fit >= sellfit2 && hour>=18) {\n    if (batt1 >= limit1) {\n        out1 = { ...msg, payload: { value: maxdischargepower1 }, url: `${url}/discharge` };\n    } else if (batt1 < limit1) {\n        out3 = { ...msg, payload: { value: \"selfconsume\" }, url: `${url}/selfconsume` };\n    }\n    if (batt2 >= limit2) {\n        out2 = { ...msg, payload: { value: maxdischargepower2 }, url: `${url}/discharge2` };\n    } else if (batt2 < limit2) {\n        out4 = { ...msg, payload: { value: \"selfconsume\" }, url: `${url}/selfconsume2` };\n    }\n} else {\n    out3 = { ...msg, payload: { value: \"selfconsume\" }, url: `${url}/selfconsume` };\n    out4 = { ...msg, payload: { value: \"selfconsume\" }, url: `${url}/selfconsume2` };\n}\n\nreturn [out1, out2, out3, out4];\n",
+        "outputs": 4,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 760,
+        "y": 720,
+        "wires": [
+            [
+                "20ce04c2cb8a709d"
+            ],
+            [
+                "c19e3c791275b46d"
+            ],
+            [
+                "c3b123a6f227aaef"
+            ],
+            [
+                "8598340eaf67cf16"
+            ]
+        ]
+    },
+    {
+        "id": "d8ade2355a73233e",
+        "type": "function",
+        "z": "5f20dbf7637ea30d",
+        "name": "CheckPrice Morning",
+        "func": "// Read global variables\nlet globalFit = global.get(\"fit\");\nlet exportbothfit = global.get(\"exportbothfit\");\nlet sellfit1 = global.get(\"sellfit1\");\nlet morningfitsell = global.get(\"morningfitsell\");\nlet morningfitslow = global.get(\"slowfitmorning\");\n\nlet loadpower1 = global.get(\"loadpower1\");\nlet loadpower2 = global.get(\"loadpower2\");\nlet batt1 = global.get(\"batt1\");\nlet batt2 = global.get(\"batt2\");\nlet activepower1 = global.get(\"activepower1\");\nlet activepower2 = global.get(\"activepower2\");\nlet chargeslowly = global.get(\"chargeslowly\");\nlet sunnyweather = global.get(\"sunnyweather\");\nlet maxdischargepower1 = global.get(\"maxdischargepower1\");\nlet maxdischargepower2 = global.get(\"maxdischargepower2\");\nlet minBattSoc = 9;\nlet useActivePower = 300; \n\n// Initialize all outputs\nlet msg1 = null, msg2 = null;\nlet msg3 = null, msg4 = null, msg5 = null;\n\n// API Call\nconst token = global.get('token');\nconst url = global.get('webhookURL');\nmsg.method = \"POST\";\n// Optional: add headers\nmsg.headers = {\n    Authorization: token,\n    \"Content-Type\": \"application/json\"\n};\n\n// Get current time\nconst now = new Date();\nconst hour = now.getHours();\nglobal.set(\"time\", hour);\n\nlet export1 = 5000;\nlet export2 = 5000;\nlet maxbatt1power1 = 10000;\nlet maxbatt1power2 = 5000;\n    \nif (batt1 <= minBattSoc && activepower1 >= useActivePower) {\n    // Discharge SH5RS\n    const dischargeDelta = Math.ceil(activepower1+100 / 100) * 100;\n    msg3 = { ...msg, payload: { value: dischargeDelta }, url: `${url}/discharge2` };\n} \n\nif (batt2 <= minBattSoc && activepower2 >= useActivePower) {\n    // Discharge SH10RS\n    const dischargeDelta = Math.ceil(activepower2 + 100 / 100) * 100;\n    msg2 = { ...msg, payload: { value: dischargeDelta }, url: `${url}/discharge` };\n} \n\nif (globalFit < morningfitsell) {\n    msg4 = { ...msg };\n    msg5 = { ...msg };\n}\n\nif (globalFit < 0) {\n    export1 = 0;\n    export2 = 0;\n}\n\nif (batt1 > 8 && globalFit >= morningfitsell) {\n    // Discharge SH10RS\n    msg2 = { ...msg, payload: { value: maxdischargepower1 }, url: `${url}/discharge` };\n}\nif (batt2 > 8 && globalFit >= morningfitsell) {\n    // Discharge SH5RS\n    msg3 = { ...msg, payload: { value: maxdischargepower2 }, url: `${url}/discharge2` };\n}\n\nif ((globalFit >= morningfitslow && globalFit < morningfitsell && (sunnyweather || chargeslowly))) {\n    if (hour >= 7 && hour < 8) {\n        maxbatt1power1 = 1000;\n        maxbatt1power2 = 1000;\n    } else if (hour >= 8 && hour < 9) {\n        maxbatt1power1 = 1000;\n        maxbatt1power2 = 1000;\n    } else if (hour >= 9 && hour < 10) {\n        maxbatt1power1 = 1500;\n        maxbatt1power2 = 1500;\n    } else if (hour >= 10 && hour < 11) {\n        maxbatt1power1 = 10000;\n        maxbatt1power2 = 5000;\n    }\n}\n\nmsg1 = { ...msg, payload: { value1: maxbatt1power1, value2: maxbatt1power2, export1: export1, export2: export2 }, url: `${url}/battlimitall` };\n\nglobal.set(\"export1\", export1);\nglobal.set(\"export2\", export2);\nglobal.set(\"maxbatt1power1\", maxbatt1power1);\nglobal.set(\"maxbatt1power2\", maxbatt1power2);\n\nreturn [msg1, msg2, msg3, msg4, msg5];",
+        "outputs": 5,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 800,
+        "y": 340,
+        "wires": [
+            [
+                "950fe2736fc7ed40"
+            ],
+            [
+                "8b88c50487fb9855"
+            ],
+            [
+                "cc9d9fcee1d1c230"
+            ],
+            [
+                "c3b123a6f227aaef"
+            ],
+            [
+                "8598340eaf67cf16"
+            ]
+        ]
+    },
+    {
+        "id": "a87e28c40c4d4b03",
+        "type": "function",
+        "z": "5f20dbf7637ea30d",
+        "name": "Force Discharge Batt2 -> ActivePower1 Midnight",
+        "func": "// Get global variables\nconst batt1 = global.get(\"batt1\");\nconst batt2 = global.get(\"batt2\");\nconst loadpower1 = global.get(\"loadpower1\");\nconst loadpower2 = global.get(\"loadpower2\");\nconst activepower1 = global.get('activepower1');\nconst activepower2 = global.get('activepower2');\nconst dcpower2 = global.get('dcpower2');\nconst fit = global.get('fit');\nconst morningfit = global.get('morningfitsell');\n\n// API Call\nconst token = global.get('token');\nconst url = global.get('webhookURL');\nmsg.method = \"POST\";\n// Optional: add headers\nmsg.headers = {\n    Authorization: token,\n    \"Content-Type\": \"application/json\"\n};\n\nconst delta = activepower1 + loadpower2 + 100 - dcpower2;\nlet forcedischarge = null;\nlet exportlimit = { ...msg, payload: { value: 5000 }, url: `${token}/exportlimit2` };\n\nif (batt1 < 10 && batt2 > 5 ) {\n    if (activepower1 >100) {\n        const dischargeDelta = Math.ceil(delta / 100) * 100;\n        forcedischarge = { ...msg, payload: { value: dischargeDelta }, url: `${token}/discharge2` };\n        return [forcedischarge, exportlimit, null];\n    } else {\n        // self consume\n        return [null, exportlimit, { ...msg, url: `${token}/selfconsume2`} ];\n    }\n}\n\n// Conditions not met\nreturn [null, exportlimit, { ...msg, url: `${token}/selfconsume2` }];\n",
+        "outputs": 3,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 830,
+        "y": 1200,
+        "wires": [
+            [
+                "e633424e17a643bd"
+            ],
+            [
+                "55d73247a814ed82"
+            ],
+            [
+                "4ef767bc668d4b70"
+            ]
+        ]
+    },
+    {
+        "id": "950fe2736fc7ed40",
+        "type": "http request",
+        "z": "5f20dbf7637ea30d",
+        "name": "Call HA Export & BattLimit All SHXRS",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "body",
+        "url": "http://192.168.87.21:8123/api/webhook/battlimitall",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 1410,
+        "y": 240,
+        "wires": [
+            [
+                "a50f3b079536ec8a"
+            ]
+        ]
+    },
+    {
+        "id": "a50f3b079536ec8a",
+        "type": "api-call-service",
+        "z": "5f20dbf7637ea30d",
+        "name": "Export Batt Limit",
+        "server": "4b37cada.edd1b4",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "notify",
+        "service": "mobile_app_zee97max",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [],
+        "data": "{\"message\":\"Current Batt {{global.batt1}}% / {{global.batt2}}% \\nPV Power {{global.dcpower1}} / {{global.dcpower2}}W  \\nBatt Export {{global.maxbatt1power1}} / {{global.maxbatt1power2}}W \\nPrice {{global.fit}}c \",\"title\":\"Export Batt Limit\"}",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1670,
+        "y": 240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c3b123a6f227aaef",
+        "type": "change",
+        "z": "5f20dbf7637ea30d",
+        "name": "SelfConsume1",
+        "rules": [
+            {
+                "t": "set",
+                "p": "url",
+                "pt": "msg",
+                "to": "$globalContext(\"webhookURL\") & \"/selfconsume\"",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1140,
+        "y": 640,
+        "wires": [
+            [
+                "8327ea7eb9d003ac"
+            ]
+        ]
+    },
+    {
+        "id": "8598340eaf67cf16",
+        "type": "change",
+        "z": "5f20dbf7637ea30d",
+        "name": "SelfConsume2",
+        "rules": [
+            {
+                "t": "set",
+                "p": "url",
+                "pt": "msg",
+                "to": "$globalContext(\"webhookURL\") & \"/selfconsume2\"",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1140,
+        "y": 680,
+        "wires": [
+            [
+                "7551839dbd987474"
+            ]
+        ]
+    },
+    {
+        "id": "33050f27556fb906",
+        "type": "server-state-changed",
+        "z": "5f20dbf7637ea30d",
+        "name": "Active Power Changed",
+        "server": "4b37cada.edd1b4",
+        "version": 5,
+        "outputs": 2,
+        "exposeAsEntityConfig": "",
+        "entityId": "sensor.meter_active_power",
+        "entityIdType": "exact",
+        "outputInitially": true,
+        "stateType": "num",
+        "ifState": "0",
+        "ifStateType": "num",
+        "ifStateOperator": "gt",
+        "outputOnlyOnStateChange": true,
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": false,
+        "ignoreCurrentStateUnavailable": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            },
+            {
+                "property": "loadpower2",
+                "propertyType": "global",
+                "value": "",
+                "valueType": "entityState"
+            }
+        ],
+        "x": 440,
+        "y": 1100,
+        "wires": [
+            [
+                "9622ed0e0f29ea42",
+                "8477ec073a1f6426"
+            ],
+            [
+                "640ea3021c57fe5d"
+            ]
+        ]
+    },
+    {
+        "id": "9622ed0e0f29ea42",
+        "type": "time-range-switch",
+        "z": "5f20dbf7637ea30d",
+        "name": "",
+        "lat": "-33.98025",
+        "lon": "151.10884",
+        "startTime": "04:00",
+        "endTime": "07:00",
+        "startOffset": 0,
+        "endOffset": 0,
+        "x": 860,
+        "y": 1140,
+        "wires": [
+            [
+                "a87e28c40c4d4b03"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "5beda4600a7adc61",
+        "type": "server-state-changed",
+        "z": "5f20dbf7637ea30d",
+        "name": "FIT Changed",
+        "server": "4b37cada.edd1b4",
+        "version": 5,
+        "outputs": 1,
+        "exposeAsEntityConfig": "",
+        "entityId": "sensor.118blakesleyrd_feed_in_price",
+        "entityIdType": "exact",
+        "outputInitially": true,
+        "stateType": "num",
+        "ifState": "",
+        "ifStateType": "num",
+        "ifStateOperator": "gte",
+        "outputOnlyOnStateChange": true,
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": false,
+        "ignoreCurrentStateUnavailable": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            },
+            {
+                "property": "fit",
+                "propertyType": "global",
+                "value": "",
+                "valueType": "entityState"
+            }
+        ],
+        "x": 690,
+        "y": 600,
+        "wires": [
+            [
+                "1e8d0dd81d3b4faf",
+                "4d6f2ef4fe80520d"
+            ]
+        ]
+    },
+    {
+        "id": "a1c8d09d66bdfb75",
+        "type": "server-state-changed",
+        "z": "5f20dbf7637ea30d",
+        "name": "Load Power 1 changed",
+        "server": "4b37cada.edd1b4",
+        "version": 5,
+        "outputs": 1,
+        "exposeAsEntityConfig": "",
+        "entityId": "sensor.load_power",
+        "entityIdType": "exact",
+        "outputInitially": true,
+        "stateType": "num",
+        "ifState": "",
+        "ifStateType": "num",
+        "ifStateOperator": "gte",
+        "outputOnlyOnStateChange": true,
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": false,
+        "ignoreCurrentStateUnavailable": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            },
+            {
+                "property": "loadpower1",
+                "propertyType": "global",
+                "value": "",
+                "valueType": "entityState"
+            }
+        ],
+        "x": 180,
+        "y": 1100,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "29a4d7cdac5e497a",
+        "type": "server-state-changed",
+        "z": "5f20dbf7637ea30d",
+        "name": "Load Power 2 changed",
+        "server": "4b37cada.edd1b4",
+        "version": 5,
+        "outputs": 1,
+        "exposeAsEntityConfig": "",
+        "entityId": "sensor.load_power2",
+        "entityIdType": "exact",
+        "outputInitially": true,
+        "stateType": "num",
+        "ifState": "",
+        "ifStateType": "num",
+        "ifStateOperator": "gte",
+        "outputOnlyOnStateChange": true,
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": false,
+        "ignoreCurrentStateUnavailable": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            },
+            {
+                "property": "loadpower2",
+                "propertyType": "global",
+                "value": "",
+                "valueType": "entityState"
+            }
+        ],
+        "x": 180,
+        "y": 1140,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "601a69a84686efd9",
+        "type": "server-state-changed",
+        "z": "5f20dbf7637ea30d",
+        "name": "DC Power 1 changed",
+        "server": "4b37cada.edd1b4",
+        "version": 5,
+        "outputs": 1,
+        "exposeAsEntityConfig": "",
+        "entityId": "sensor.total_dc_power",
+        "entityIdType": "exact",
+        "outputInitially": true,
+        "stateType": "num",
+        "ifState": "",
+        "ifStateType": "num",
+        "ifStateOperator": "gte",
+        "outputOnlyOnStateChange": true,
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": false,
+        "ignoreCurrentStateUnavailable": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            },
+            {
+                "property": "dcpower1",
+                "propertyType": "global",
+                "value": "",
+                "valueType": "entityState"
+            }
+        ],
+        "x": 180,
+        "y": 1180,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "21eb9b9d390dfe45",
+        "type": "server-state-changed",
+        "z": "5f20dbf7637ea30d",
+        "name": "DC Power 2 changed",
+        "server": "4b37cada.edd1b4",
+        "version": 5,
+        "outputs": 1,
+        "exposeAsEntityConfig": "",
+        "entityId": "sensor.total_dc_power2",
+        "entityIdType": "exact",
+        "outputInitially": true,
+        "stateType": "num",
+        "ifState": "",
+        "ifStateType": "num",
+        "ifStateOperator": "gte",
+        "outputOnlyOnStateChange": true,
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": false,
+        "ignoreCurrentStateUnavailable": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            },
+            {
+                "property": "dcpower2",
+                "propertyType": "global",
+                "value": "",
+                "valueType": "entityState"
+            }
+        ],
+        "x": 180,
+        "y": 1220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f00c45a0d905d365",
+        "type": "server-state-changed",
+        "z": "5f20dbf7637ea30d",
+        "name": "Active Power 1 changed",
+        "server": "4b37cada.edd1b4",
+        "version": 5,
+        "outputs": 1,
+        "exposeAsEntityConfig": "",
+        "entityId": "sensor.meter_active_power",
+        "entityIdType": "exact",
+        "outputInitially": true,
+        "stateType": "num",
+        "ifState": "",
+        "ifStateType": "num",
+        "ifStateOperator": "gte",
+        "outputOnlyOnStateChange": true,
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": false,
+        "ignoreCurrentStateUnavailable": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            },
+            {
+                "property": "activepower1",
+                "propertyType": "global",
+                "value": "",
+                "valueType": "entityState"
+            }
+        ],
+        "x": 190,
+        "y": 1260,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ea9bf136df2e3f73",
+        "type": "server-state-changed",
+        "z": "5f20dbf7637ea30d",
+        "name": "Active Power 2 changed",
+        "server": "4b37cada.edd1b4",
+        "version": 5,
+        "outputs": 1,
+        "exposeAsEntityConfig": "",
+        "entityId": "sensor.meter_active_power2",
+        "entityIdType": "exact",
+        "outputInitially": true,
+        "stateType": "num",
+        "ifState": "",
+        "ifStateType": "num",
+        "ifStateOperator": "gt",
+        "outputOnlyOnStateChange": true,
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": false,
+        "ignoreCurrentStateUnavailable": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            },
+            {
+                "property": "activepower2",
+                "propertyType": "global",
+                "value": "",
+                "valueType": "entityState"
+            }
+        ],
+        "x": 190,
+        "y": 1300,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "1e8d0dd81d3b4faf",
+        "type": "time-range-switch",
+        "z": "5f20dbf7637ea30d",
+        "name": "",
+        "lat": "",
+        "lon": "",
+        "startTime": "11:00",
+        "endTime": "16:00",
+        "startOffset": 0,
+        "endOffset": 0,
+        "x": 870,
+        "y": 600,
+        "wires": [
+            [
+                "aaa35f7148e8472b"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "7eb95ace2196a0ca",
+        "type": "server-state-changed",
+        "z": "5f20dbf7637ea30d",
+        "name": "FIT Changed",
+        "server": "4b37cada.edd1b4",
+        "version": 5,
+        "outputs": 2,
+        "exposeAsEntityConfig": "",
+        "entityId": "sensor.118blakesleyrd_feed_in_price",
+        "entityIdType": "exact",
+        "outputInitially": true,
+        "stateType": "num",
+        "ifState": "0.2",
+        "ifStateType": "num",
+        "ifStateOperator": "gt",
+        "outputOnlyOnStateChange": true,
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": false,
+        "ignoreCurrentStateUnavailable": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            },
+            {
+                "property": "fit",
+                "propertyType": "global",
+                "value": "",
+                "valueType": "entityState"
+            }
+        ],
+        "x": 530,
+        "y": 100,
+        "wires": [
+            [
+                "b026a673328d59a0"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "b026a673328d59a0",
+        "type": "time-range-switch",
+        "z": "5f20dbf7637ea30d",
+        "name": "",
+        "lat": "-33.88328",
+        "lon": "151.19967",
+        "startTime": "07:00",
+        "endTime": "10:00",
+        "startOffset": 0,
+        "endOffset": 0,
+        "x": 750,
+        "y": 220,
+        "wires": [
+            [
+                "d8ade2355a73233e",
+                "cb1923d07397e2e0"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "a51eb7f73ae1848b",
+        "type": "server-state-changed",
+        "z": "5f20dbf7637ea30d",
+        "name": "Battery Level 1 changed",
+        "server": "4b37cada.edd1b4",
+        "version": 5,
+        "outputs": 1,
+        "exposeAsEntityConfig": "",
+        "entityId": "sensor.battery_level",
+        "entityIdType": "exact",
+        "outputInitially": true,
+        "stateType": "num",
+        "ifState": "",
+        "ifStateType": "num",
+        "ifStateOperator": "gte",
+        "outputOnlyOnStateChange": true,
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": false,
+        "ignoreCurrentStateUnavailable": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            },
+            {
+                "property": "batt1",
+                "propertyType": "global",
+                "value": "",
+                "valueType": "entityState"
+            }
+        ],
+        "x": 190,
+        "y": 1020,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "01fd6340fc166d68",
+        "type": "server-state-changed",
+        "z": "5f20dbf7637ea30d",
+        "name": "Battery Level 2 changed",
+        "server": "4b37cada.edd1b4",
+        "version": 5,
+        "outputs": 1,
+        "exposeAsEntityConfig": "",
+        "entityId": "sensor.battery_level2",
+        "entityIdType": "exact",
+        "outputInitially": true,
+        "stateType": "num",
+        "ifState": "",
+        "ifStateType": "num",
+        "ifStateOperator": "gte",
+        "outputOnlyOnStateChange": true,
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": false,
+        "ignoreCurrentStateUnavailable": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            },
+            {
+                "property": "batt2",
+                "propertyType": "global",
+                "value": "",
+                "valueType": "entityState"
+            }
+        ],
+        "x": 190,
+        "y": 1060,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "38c61b689e41c718",
+        "type": "server-state-changed",
+        "z": "5f20dbf7637ea30d",
+        "name": "AEMO Current Period changed",
+        "server": "4b37cada.edd1b4",
+        "version": 5,
+        "outputs": 1,
+        "exposeAsEntityConfig": "",
+        "entityId": "sensor.aemo_nem_nsw1_current_5min_period_price",
+        "entityIdType": "exact",
+        "outputInitially": true,
+        "stateType": "num",
+        "ifState": "",
+        "ifStateType": "num",
+        "ifStateOperator": "gte",
+        "outputOnlyOnStateChange": true,
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": false,
+        "ignoreCurrentStateUnavailable": false,
+        "outputProperties": [
+            {
+                "property": "fit2",
+                "propertyType": "global",
+                "value": "",
+                "valueType": "entityState"
+            }
+        ],
+        "x": 210,
+        "y": 960,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d3b6289b09a0bd84",
+        "type": "server-state-changed",
+        "z": "5f20dbf7637ea30d",
+        "name": "AmberFIT changed",
+        "server": "4b37cada.edd1b4",
+        "version": 5,
+        "outputs": 1,
+        "exposeAsEntityConfig": "",
+        "entityId": "sensor.118blakesleyrd_feed_in_price",
+        "entityIdType": "exact",
+        "outputInitially": true,
+        "stateType": "num",
+        "ifState": "",
+        "ifStateType": "num",
+        "ifStateOperator": "gte",
+        "outputOnlyOnStateChange": true,
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": false,
+        "ignoreCurrentStateUnavailable": false,
+        "outputProperties": [
+            {
+                "property": "fit",
+                "propertyType": "global",
+                "value": "",
+                "valueType": "entityState"
+            }
+        ],
+        "x": 170,
+        "y": 920,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "cc9d9fcee1d1c230",
+        "type": "http request",
+        "z": "5f20dbf7637ea30d",
+        "name": "Call HA Discharge2 SH5RS",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "body",
+        "url": "http://192.168.87.21:8123/api/webhook/discharge2",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 1360,
+        "y": 460,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8b88c50487fb9855",
+        "type": "http request",
+        "z": "5f20dbf7637ea30d",
+        "name": "Call HA Discharge SH10RS",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "body",
+        "url": "http://192.168.87.21:8123/api/webhook/discharge",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 1360,
+        "y": 420,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4d6f2ef4fe80520d",
+        "type": "time-range-switch",
+        "z": "5f20dbf7637ea30d",
+        "name": "",
+        "lat": "-33.98025",
+        "lon": "151.10885",
+        "startTime": "16:30",
+        "endTime": "22:00",
+        "startOffset": 0,
+        "endOffset": 0,
+        "x": 870,
+        "y": 640,
+        "wires": [
+            [
+                "d473c1dc91dbcee9"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "e2f00ef4d19e5e6d",
+        "type": "http request",
+        "z": "5f20dbf7637ea30d",
+        "name": "Call HA Export & BattLimit All SHXRS",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "body",
+        "url": "http://192.168.87.21:8123/api/webhook/battlimitall",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 1710,
+        "y": 660,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "42d80bd5ef39e196",
+        "type": "delay",
+        "z": "5f20dbf7637ea30d",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "1",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 1260,
+        "y": 580,
+        "wires": [
+            [
+                "a319d0e4bf1082f8"
+            ]
+        ]
+    },
+    {
+        "id": "6792363263bbedc6",
+        "type": "server-state-changed",
+        "z": "5f20dbf7637ea30d",
+        "name": "Battery Level 1",
+        "server": "4b37cada.edd1b4",
+        "version": 5,
+        "outputs": 1,
+        "exposeAsEntityConfig": "",
+        "entityId": "sensor.battery_level",
+        "entityIdType": "exact",
+        "outputInitially": true,
+        "stateType": "num",
+        "ifState": "",
+        "ifStateType": "num",
+        "ifStateOperator": "gte",
+        "outputOnlyOnStateChange": true,
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": false,
+        "ignoreCurrentStateUnavailable": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            }
+        ],
+        "x": 1320,
+        "y": 520,
+        "wires": [
+            [
+                "42d80bd5ef39e196"
+            ]
+        ]
+    },
+    {
+        "id": "8856ebbf11e19e1b",
+        "type": "server-state-changed",
+        "z": "5f20dbf7637ea30d",
+        "name": "Battery Level 2",
+        "server": "4b37cada.edd1b4",
+        "version": 5,
+        "outputs": 1,
+        "exposeAsEntityConfig": "",
+        "entityId": "sensor.battery_level2",
+        "entityIdType": "exact",
+        "outputInitially": true,
+        "stateType": "num",
+        "ifState": "",
+        "ifStateType": "num",
+        "ifStateOperator": "gte",
+        "outputOnlyOnStateChange": true,
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": false,
+        "ignoreCurrentStateUnavailable": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            }
+        ],
+        "x": 1520,
+        "y": 520,
+        "wires": [
+            [
+                "42d80bd5ef39e196"
+            ]
+        ]
+    },
+    {
+        "id": "55d73247a814ed82",
+        "type": "http request",
+        "z": "5f20dbf7637ea30d",
+        "name": "Call HA ExportLimit 2",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "body",
+        "url": "http://192.168.87.21:8123/api/webhook/exportlimit2",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 1280,
+        "y": 1180,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "957bf887092bb8e0",
+        "type": "function",
+        "z": "5f20dbf7637ea30d",
+        "name": "Force Charge AM",
+        "func": "// Get global variables\nconst batt1 = global.get(\"batt1\");\nconst batt2 = global.get(\"batt2\");\nconst loadpower1 = global.get(\"loadpower1\");\nconst loadpower2 = global.get(\"loadpower2\");\nconst activepower1 = global.get('activepower1');\nconst activepower2 = global.get('activepower2');\nconst fit = global.get('fit');\nconst morningfit = global.get('morningfitsell');\nconst buyfit = global.get('buyfit');\nconst forcechargemorning1 = global.get('forcechargemorning1');\nconst forcechargemorning2 = global.get('forcechargemorning2');\nconst forcechargebattlimitAM = global.get('forcechargebattlimitAM');\n\nlet forcecharge1 = null;\nlet forcecharge2 = null;\nlet selfconsume1 = null;\nlet selfconsume2 = null;\n\n// API Call\nconst token = global.get('token');\nconst url = global.get('webhookURL');\nmsg.method = \"POST\";\n// Optional: add headers\nmsg.headers = {\n    Authorization: token,\n    \"Content-Type\": \"application/json\"\n};\n\n// Condition check\nif (batt1 <= forcechargebattlimitAM && fit <= buyfit && forcechargemorning1) {\n    forcecharge1 = { ...msg, payload: { value: 4000 }, url: `${url}/charge` };\n} else if (batt1 > forcechargebattlimitAM && activepower1>=0) {\n    selfconsume1 = { ...msg, payload: { value: \"selfconsume\" }, url: `${url}/selfconsume` };\n}\nif (batt2 <= forcechargebattlimitAM && fit <= buyfit && forcechargemorning2) {\n    forcecharge2 = { ...msg, payload: { value: 3000 }, url: `${url}/charge2` };\n} else if (batt2 > forcechargebattlimitAM && activepower2 >= 0) {\n    selfconsume2 = { ...msg, payload: { value: \"selfconsume\" }, url: `${url}/selfconsume2` };\n}\nreturn [forcecharge1, forcecharge2, selfconsume1, selfconsume2];\n",
+        "outputs": 4,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 810,
+        "y": 980,
+        "wires": [
+            [
+                "4728cd0cce1bdb77"
+            ],
+            [
+                "4728cd0cce1bdb77"
+            ],
+            [
+                "8327ea7eb9d003ac"
+            ],
+            [
+                "7551839dbd987474"
+            ]
+        ]
+    },
+    {
+        "id": "8e889be2f0a5809d",
+        "type": "inject",
+        "z": "5f20dbf7637ea30d",
+        "name": "Every 5 Min 12-7am",
+        "props": [],
+        "repeat": "",
+        "crontab": "*/1 0-6 * * *",
+        "once": true,
+        "onceDelay": "4",
+        "topic": "",
+        "x": 440,
+        "y": 1140,
+        "wires": [
+            [
+                "640ea3021c57fe5d"
+            ]
+        ]
+    },
+    {
+        "id": "fb2fa6d45f9c0bf3",
+        "type": "server-state-changed",
+        "z": "5f20dbf7637ea30d",
+        "name": "sellfit1",
+        "server": "4b37cada.edd1b4",
+        "version": 5,
+        "outputs": 1,
+        "exposeAsEntityConfig": "",
+        "entityId": "input_number.sell_fit_evening1",
+        "entityIdType": "exact",
+        "outputInitially": true,
+        "stateType": "num",
+        "ifState": "",
+        "ifStateType": "num",
+        "ifStateOperator": "gte",
+        "outputOnlyOnStateChange": true,
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": false,
+        "ignoreCurrentStateUnavailable": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            },
+            {
+                "property": "sellfit1",
+                "propertyType": "global",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "name",
+                "propertyType": "msg",
+                "value": "sellfit1",
+                "valueType": "str"
+            }
+        ],
+        "x": 130,
+        "y": 460,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6da5697d887ce2be",
+        "type": "server-state-changed",
+        "z": "5f20dbf7637ea30d",
+        "name": "sellfit2",
+        "server": "4b37cada.edd1b4",
+        "version": 5,
+        "outputs": 1,
+        "exposeAsEntityConfig": "",
+        "entityId": "input_number.sell_fit_evening2",
+        "entityIdType": "exact",
+        "outputInitially": true,
+        "stateType": "num",
+        "ifState": "",
+        "ifStateType": "num",
+        "ifStateOperator": "gte",
+        "outputOnlyOnStateChange": true,
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": false,
+        "ignoreCurrentStateUnavailable": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            },
+            {
+                "property": "sellfit2",
+                "propertyType": "global",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "name",
+                "propertyType": "msg",
+                "value": "sellfit2",
+                "valueType": "str"
+            }
+        ],
+        "x": 130,
+        "y": 500,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "1e9241add92e9bbe",
+        "type": "server-state-changed",
+        "z": "5f20dbf7637ea30d",
+        "name": "slowfitmorning",
+        "server": "4b37cada.edd1b4",
+        "version": 5,
+        "outputs": 1,
+        "exposeAsEntityConfig": "",
+        "entityId": "input_number.slow_fit_morning",
+        "entityIdType": "exact",
+        "outputInitially": true,
+        "stateType": "num",
+        "ifState": "",
+        "ifStateType": "num",
+        "ifStateOperator": "gte",
+        "outputOnlyOnStateChange": true,
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": false,
+        "ignoreCurrentStateUnavailable": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            },
+            {
+                "property": "slowfitmorning",
+                "propertyType": "global",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "name",
+                "propertyType": "msg",
+                "value": "slow_am_fit",
+                "valueType": "str"
+            }
+        ],
+        "x": 520,
+        "y": 200,
+        "wires": [
+            [
+                "b026a673328d59a0"
+            ]
+        ]
+    },
+    {
+        "id": "990ec11a405e1cdd",
+        "type": "server-state-changed",
+        "z": "5f20dbf7637ea30d",
+        "name": "exportbothfit",
+        "server": "4b37cada.edd1b4",
+        "version": 5,
+        "outputs": 1,
+        "exposeAsEntityConfig": "",
+        "entityId": "input_number.sell_fit_all",
+        "entityIdType": "exact",
+        "outputInitially": true,
+        "stateType": "num",
+        "ifState": "",
+        "ifStateType": "num",
+        "ifStateOperator": "gte",
+        "outputOnlyOnStateChange": true,
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": false,
+        "ignoreCurrentStateUnavailable": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            },
+            {
+                "property": "exportbothfit",
+                "propertyType": "global",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "name",
+                "propertyType": "msg",
+                "value": "exportbothfit",
+                "valueType": "str"
+            }
+        ],
+        "x": 150,
+        "y": 540,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "16f4213b84bf58a6",
+        "type": "server-state-changed",
+        "z": "5f20dbf7637ea30d",
+        "name": "buyfit",
+        "server": "4b37cada.edd1b4",
+        "version": 5,
+        "outputs": 1,
+        "exposeAsEntityConfig": "",
+        "entityId": "input_number.buy_fit_for_charging",
+        "entityIdType": "exact",
+        "outputInitially": true,
+        "stateType": "num",
+        "ifState": "",
+        "ifStateType": "num",
+        "ifStateOperator": "gte",
+        "outputOnlyOnStateChange": true,
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": false,
+        "ignoreCurrentStateUnavailable": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            },
+            {
+                "property": "buyfit",
+                "propertyType": "global",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "name",
+                "propertyType": "msg",
+                "value": "buyfit",
+                "valueType": "str"
+            }
+        ],
+        "x": 490,
+        "y": 1040,
+        "wires": [
+            [
+                "640ea3021c57fe5d"
+            ]
+        ]
+    },
+    {
+        "id": "5378199207ee1257",
+        "type": "api-call-service",
+        "z": "5f20dbf7637ea30d",
+        "name": "Slider Changed",
+        "server": "4b37cada.edd1b4",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "notify",
+        "service": "mobile_app_zee97max",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [],
+        "data": "{\"message\":\"State {{payload}} {{name}} \",\"title\":\"Slider changes\"}",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 380,
+        "y": 1340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a71cfeb3ccacdc9a",
+        "type": "server-state-changed",
+        "z": "5f20dbf7637ea30d",
+        "name": "forcechargebattlimitAM",
+        "server": "4b37cada.edd1b4",
+        "version": 5,
+        "outputs": 1,
+        "exposeAsEntityConfig": "",
+        "entityId": "input_number.forcechargebattlimit_am",
+        "entityIdType": "exact",
+        "outputInitially": true,
+        "stateType": "num",
+        "ifState": "",
+        "ifStateType": "num",
+        "ifStateOperator": "gte",
+        "outputOnlyOnStateChange": true,
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": false,
+        "ignoreCurrentStateUnavailable": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            },
+            {
+                "property": "forcechargebattlimitAM",
+                "propertyType": "global",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "name",
+                "propertyType": "msg",
+                "value": "forcechargebattlimitAM",
+                "valueType": "str"
+            }
+        ],
+        "x": 180,
+        "y": 740,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "36fde6730a60c8fd",
+        "type": "server-state-changed",
+        "z": "5f20dbf7637ea30d",
+        "name": "forcechargebattlimitPM",
+        "server": "4b37cada.edd1b4",
+        "version": 5,
+        "outputs": 1,
+        "exposeAsEntityConfig": "",
+        "entityId": "input_number.forcechargebattlimit_pm",
+        "entityIdType": "exact",
+        "outputInitially": true,
+        "stateType": "num",
+        "ifState": "",
+        "ifStateType": "num",
+        "ifStateOperator": "gte",
+        "outputOnlyOnStateChange": true,
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": false,
+        "ignoreCurrentStateUnavailable": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            },
+            {
+                "property": "forcechargebattlimitPM",
+                "propertyType": "global",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "name",
+                "propertyType": "msg",
+                "value": "forcechargebattlimitPM",
+                "valueType": "str"
+            }
+        ],
+        "x": 180,
+        "y": 780,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3fb7136e96f80575",
+        "type": "server-state-changed",
+        "z": "5f20dbf7637ea30d",
+        "name": "All input_boolean",
+        "server": "home_assistant",
+        "version": 5,
+        "outputs": 1,
+        "exposeAsEntityConfig": "",
+        "entityId": "input_boolean.*",
+        "entityIdType": "regex",
+        "outputInitially": false,
+        "stateType": "str",
+        "ifState": "",
+        "ifStateType": "str",
+        "ifStateOperator": "is",
+        "outputOnlyOnStateChange": true,
+        "for": "0",
+        "forType": "num",
+        "forUnits": "seconds",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": false,
+        "ignoreCurrentStateUnavailable": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            }
+        ],
+        "x": 160,
+        "y": 1340,
+        "wires": [
+            [
+                "b98c5b9ea6933f58"
+            ]
+        ]
+    },
+    {
+        "id": "b98c5b9ea6933f58",
+        "type": "switch",
+        "z": "5f20dbf7637ea30d",
+        "name": "Route by Entity",
+        "property": "topic",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "input_boolean.force_charge_enable_am1",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "input_boolean.force_charge_enable_am2",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "input_boolean.force_charge_enable_pm1",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "input_boolean.force_charge_enable_pm2",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "input_boolean.charge_slowly",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "input_boolean.sunny_weather",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 6,
+        "x": 160,
+        "y": 1420,
+        "wires": [
+            [
+                "fc57aa0e2a825113"
+            ],
+            [
+                "d5573b17278bd8ea"
+            ],
+            [
+                "5da8fbb2bbf0dc42"
+            ],
+            [
+                "dfd11316e940043f"
+            ],
+            [
+                "697a171c7cf9ad5b"
+            ],
+            [
+                "361d1528e2a3370c"
+            ]
+        ]
+    },
+    {
+        "id": "fc57aa0e2a825113",
+        "type": "change",
+        "z": "5f20dbf7637ea30d",
+        "name": "Set AM1 Boolean",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "$boolean(payload = \"on\")",
+                "tot": "jsonata"
+            },
+            {
+                "t": "set",
+                "p": "forcechargemorning1",
+                "pt": "global",
+                "to": "payload",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "name",
+                "pt": "msg",
+                "to": "topic",
+                "tot": "msg"
+            }
+        ],
+        "x": 370,
+        "y": 1400,
+        "wires": [
+            [
+                "5378199207ee1257"
+            ]
+        ]
+    },
+    {
+        "id": "d5573b17278bd8ea",
+        "type": "change",
+        "z": "5f20dbf7637ea30d",
+        "name": "Set AM2 Boolean",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "$boolean(payload = \"on\")",
+                "tot": "jsonata"
+            },
+            {
+                "t": "set",
+                "p": "forcechargemorning2",
+                "pt": "global",
+                "to": "payload",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "name",
+                "pt": "msg",
+                "to": "topic",
+                "tot": "msg"
+            }
+        ],
+        "x": 380,
+        "y": 1440,
+        "wires": [
+            [
+                "5378199207ee1257"
+            ]
+        ]
+    },
+    {
+        "id": "5da8fbb2bbf0dc42",
+        "type": "change",
+        "z": "5f20dbf7637ea30d",
+        "name": "Set PM1 Boolean",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "$boolean(payload = \"on\")",
+                "tot": "jsonata"
+            },
+            {
+                "t": "set",
+                "p": "forcechargePM1",
+                "pt": "global",
+                "to": "payload",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "name",
+                "pt": "msg",
+                "to": "topic",
+                "tot": "msg"
+            }
+        ],
+        "x": 380,
+        "y": 1480,
+        "wires": [
+            [
+                "5378199207ee1257"
+            ]
+        ]
+    },
+    {
+        "id": "dfd11316e940043f",
+        "type": "change",
+        "z": "5f20dbf7637ea30d",
+        "name": "Set PM2 Boolean",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "$boolean(payload = \"on\")",
+                "tot": "jsonata"
+            },
+            {
+                "t": "set",
+                "p": "forcechargePM2",
+                "pt": "global",
+                "to": "payload",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "name",
+                "pt": "msg",
+                "to": "topic",
+                "tot": "msg"
+            }
+        ],
+        "x": 380,
+        "y": 1520,
+        "wires": [
+            [
+                "5378199207ee1257"
+            ]
+        ]
+    },
+    {
+        "id": "697a171c7cf9ad5b",
+        "type": "change",
+        "z": "5f20dbf7637ea30d",
+        "name": "Set Charge Slowly",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "$boolean(payload = \"on\")",
+                "tot": "jsonata"
+            },
+            {
+                "t": "set",
+                "p": "chargeslowly",
+                "pt": "global",
+                "to": "payload",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "name",
+                "pt": "msg",
+                "to": "topic",
+                "tot": "msg"
+            }
+        ],
+        "x": 380,
+        "y": 1560,
+        "wires": [
+            [
+                "5378199207ee1257"
+            ]
+        ]
+    },
+    {
+        "id": "361d1528e2a3370c",
+        "type": "change",
+        "z": "5f20dbf7637ea30d",
+        "name": "Set Sunny Weather",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "$boolean(payload = \"on\")",
+                "tot": "jsonata"
+            },
+            {
+                "t": "set",
+                "p": "sunnyweather",
+                "pt": "global",
+                "to": "payload",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "name",
+                "pt": "msg",
+                "to": "topic",
+                "tot": "msg"
+            }
+        ],
+        "x": 380,
+        "y": 1600,
+        "wires": [
+            [
+                "5378199207ee1257"
+            ]
+        ]
+    },
+    {
+        "id": "4ef767bc668d4b70",
+        "type": "http request",
+        "z": "5f20dbf7637ea30d",
+        "name": "Call HA Selfconsume2 SH5RS",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "body",
+        "url": "http://192.168.87.21:8123/api/webhook/selfconsume2",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 1310,
+        "y": 1220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6ffbabc181f5352d",
+        "type": "server-state-changed",
+        "z": "5f20dbf7637ea30d",
+        "name": "forcedischargebattlimit1",
+        "server": "4b37cada.edd1b4",
+        "version": 5,
+        "outputs": 1,
+        "exposeAsEntityConfig": "",
+        "entityId": "input_number.forcedischargebattlimit1",
+        "entityIdType": "exact",
+        "outputInitially": true,
+        "stateType": "num",
+        "ifState": "",
+        "ifStateType": "num",
+        "ifStateOperator": "gte",
+        "outputOnlyOnStateChange": true,
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": false,
+        "ignoreCurrentStateUnavailable": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            },
+            {
+                "property": "limit1",
+                "propertyType": "global",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "name",
+                "propertyType": "msg",
+                "value": "forcedischargebattlimit1",
+                "valueType": "str"
+            }
+        ],
+        "x": 190,
+        "y": 820,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5e94e312700fcac4",
+        "type": "server-state-changed",
+        "z": "5f20dbf7637ea30d",
+        "name": "forcedischargebattlimit2",
+        "server": "4b37cada.edd1b4",
+        "version": 5,
+        "outputs": 1,
+        "exposeAsEntityConfig": "",
+        "entityId": "input_number.forcedischargebattlimit2",
+        "entityIdType": "exact",
+        "outputInitially": true,
+        "stateType": "num",
+        "ifState": "",
+        "ifStateType": "num",
+        "ifStateOperator": "gte",
+        "outputOnlyOnStateChange": true,
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": false,
+        "ignoreCurrentStateUnavailable": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            },
+            {
+                "property": "limit2",
+                "propertyType": "global",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "name",
+                "propertyType": "msg",
+                "value": "forcedischargebattlimit2",
+                "valueType": "str"
+            }
+        ],
+        "x": 190,
+        "y": 860,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ead56bc7384c7823",
+        "type": "change",
+        "z": "5f20dbf7637ea30d",
+        "name": "Token URL",
+        "rules": [
+            {
+                "t": "set",
+                "p": "token",
+                "pt": "global",
+                "to": "YourHAWebhookAccessToken",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "webhookURL",
+                "pt": "global",
+                "to": "http://192.168.87.21:8123/api/webhook",
+                "tot": "str"
+            }
+        ],
+        "x": 150,
+        "y": 280,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4728cd0cce1bdb77",
+        "type": "http request",
+        "z": "5f20dbf7637ea30d",
+        "name": "Call HA Charge",
+        "method": "use",
+        "ret": "txt",
+        "paytoqs": "body",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 1100,
+        "y": 980,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b29bd09632603e03",
+        "type": "http request",
+        "z": "5f20dbf7637ea30d",
+        "name": "Call HA ExportLimit Both",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "body",
+        "url": "http://192.168.87.21:8123/api/webhook/exportlimit",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 1630,
+        "y": 300,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3bf1f759f8432bda",
+        "type": "http request",
+        "z": "5f20dbf7637ea30d",
+        "name": "Call HA Discharge Generic",
+        "method": "use",
+        "ret": "txt",
+        "paytoqs": "body",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "other",
+                "keyValue": "Authorization",
+                "valueType": "msg",
+                "valueValue": "token"
+            },
+            {
+                "keyType": "other",
+                "keyValue": "Content-Type",
+                "valueType": "other",
+                "valueValue": "application/json"
+            }
+        ],
+        "x": 1920,
+        "y": 880,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8477ec073a1f6426",
+        "type": "time-range-switch",
+        "z": "5f20dbf7637ea30d",
+        "name": "",
+        "lat": "-33.98025",
+        "lon": "151.10884",
+        "startTime": "22:00",
+        "endTime": "23:59",
+        "startOffset": 0,
+        "endOffset": 0,
+        "x": 860,
+        "y": 1100,
+        "wires": [
+            [
+                "a87e28c40c4d4b03"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "88b25b78d0b5c9a6",
+        "type": "server-state-changed",
+        "z": "5f20dbf7637ea30d",
+        "name": "morningfitsell",
+        "server": "4b37cada.edd1b4",
+        "version": 5,
+        "outputs": 1,
+        "exposeAsEntityConfig": "",
+        "entityId": "input_number.sell_fit_morning",
+        "entityIdType": "exact",
+        "outputInitially": true,
+        "stateType": "num",
+        "ifState": "",
+        "ifStateType": "num",
+        "ifStateOperator": "gte",
+        "outputOnlyOnStateChange": true,
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": false,
+        "ignoreCurrentStateUnavailable": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            },
+            {
+                "property": "morningfitsell",
+                "propertyType": "global",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "name",
+                "propertyType": "msg",
+                "value": "am_fit",
+                "valueType": "str"
+            }
+        ],
+        "x": 530,
+        "y": 160,
+        "wires": [
+            [
+                "b026a673328d59a0"
+            ]
+        ]
+    },
+    {
+        "id": "d94fe707ba236534",
+        "type": "server-state-changed",
+        "z": "5f20dbf7637ea30d",
+        "name": "maxdischargepower1",
+        "server": "4b37cada.edd1b4",
+        "version": 5,
+        "outputs": 1,
+        "exposeAsEntityConfig": "",
+        "entityId": "input_number.maxdischargepower1",
+        "entityIdType": "exact",
+        "outputInitially": true,
+        "stateType": "num",
+        "ifState": "",
+        "ifStateType": "num",
+        "ifStateOperator": "gte",
+        "outputOnlyOnStateChange": true,
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": false,
+        "ignoreCurrentStateUnavailable": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            },
+            {
+                "property": "maxdischargepower1",
+                "propertyType": "global",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "name",
+                "propertyType": "msg",
+                "value": "maxdischargepower1",
+                "valueType": "str"
+            }
+        ],
+        "x": 180,
+        "y": 660,
+        "wires": [
+            [
+                "d473c1dc91dbcee9"
+            ]
+        ]
+    },
+    {
+        "id": "09ef4ead057daa59",
+        "type": "server-state-changed",
+        "z": "5f20dbf7637ea30d",
+        "name": "maxdischargepower2",
+        "server": "4b37cada.edd1b4",
+        "version": 5,
+        "outputs": 1,
+        "exposeAsEntityConfig": "",
+        "entityId": "input_number.maxdischargepower2",
+        "entityIdType": "exact",
+        "outputInitially": true,
+        "stateType": "num",
+        "ifState": "",
+        "ifStateType": "num",
+        "ifStateOperator": "gte",
+        "outputOnlyOnStateChange": true,
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": false,
+        "ignoreCurrentStateUnavailable": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            },
+            {
+                "property": "maxdischargepower2",
+                "propertyType": "global",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "name",
+                "propertyType": "msg",
+                "value": "maxdischargepower2",
+                "valueType": "str"
+            }
+        ],
+        "x": 180,
+        "y": 700,
+        "wires": [
+            [
+                "d473c1dc91dbcee9"
+            ]
+        ]
+    },
+    {
+        "id": "b7d7aa80b8a665af",
+        "type": "inject",
+        "z": "5f20dbf7637ea30d",
+        "name": "Once at 14:58",
+        "props": [],
+        "repeat": "",
+        "crontab": "58 14 * * *",
+        "once": true,
+        "onceDelay": "2",
+        "topic": "",
+        "x": 480,
+        "y": 820,
+        "wires": [
+            [
+                "f40b8ba1e9c3721f"
+            ]
+        ]
+    },
+    {
+        "id": "3e1f587966d476b0",
+        "type": "inject",
+        "z": "5f20dbf7637ea30d",
+        "name": "Once at 19:02",
+        "props": [],
+        "repeat": "",
+        "crontab": "02 19 * * *",
+        "once": true,
+        "onceDelay": "2",
+        "topic": "",
+        "x": 480,
+        "y": 860,
+        "wires": [
+            [
+                "f40b8ba1e9c3721f"
+            ]
+        ]
+    },
+    {
+        "id": "f40b8ba1e9c3721f",
+        "type": "change",
+        "z": "5f20dbf7637ea30d",
+        "name": "SelfConsume All",
+        "rules": [
+            {
+                "t": "set",
+                "p": "url",
+                "pt": "msg",
+                "to": "$globalContext(\"webhookURL\") & \"/selfconsume2\"",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 800,
+        "y": 840,
+        "wires": [
+            [
+                "c3b123a6f227aaef",
+                "8598340eaf67cf16"
+            ]
+        ]
+    },
+    {
+        "id": "a1184c859ac10daf",
+        "type": "server-state-changed",
+        "z": "5f20dbf7637ea30d",
+        "name": "FIT Changed",
+        "server": "4b37cada.edd1b4",
+        "version": 5,
+        "outputs": 2,
+        "exposeAsEntityConfig": "",
+        "entityId": "sensor.118blakesleyrd_feed_in_price",
+        "entityIdType": "exact",
+        "outputInitially": true,
+        "stateType": "num",
+        "ifState": "buyfit",
+        "ifStateType": "global",
+        "ifStateOperator": "lte",
+        "outputOnlyOnStateChange": true,
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": false,
+        "ignoreCurrentStateUnavailable": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            },
+            {
+                "property": "fit",
+                "propertyType": "global",
+                "value": "",
+                "valueType": "entityState"
+            }
+        ],
+        "x": 470,
+        "y": 1000,
+        "wires": [
+            [
+                "640ea3021c57fe5d"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "640ea3021c57fe5d",
+        "type": "time-range-switch",
+        "z": "5f20dbf7637ea30d",
+        "name": "",
+        "lat": "-33.98025",
+        "lon": "151.10884",
+        "startTime": "00:01",
+        "endTime": "07:00",
+        "startOffset": 0,
+        "endOffset": 0,
+        "x": 670,
+        "y": 1040,
+        "wires": [
+            [
+                "957bf887092bb8e0"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "0f23202ad078a894",
+        "type": "inject",
+        "z": "5f20dbf7637ea30d",
+        "name": "Once at 8.34",
+        "props": [],
+        "repeat": "",
+        "crontab": "34 08 * * *",
+        "once": true,
+        "onceDelay": "2",
+        "topic": "",
+        "x": 480,
+        "y": 780,
+        "wires": [
+            [
+                "f40b8ba1e9c3721f"
+            ]
+        ]
+    },
+    {
+        "id": "43c6ee73b16179cc",
+        "type": "server-state-changed",
+        "z": "5f20dbf7637ea30d",
+        "name": "Force PM Charge2",
+        "server": "4b37cada.edd1b4",
+        "version": 5,
+        "outputs": 1,
+        "exposeAsEntityConfig": "",
+        "entityId": "input_boolean.force_charge_enable_pm1",
+        "entityIdType": "exact",
+        "outputInitially": true,
+        "stateType": "num",
+        "ifState": "",
+        "ifStateType": "num",
+        "ifStateOperator": "gte",
+        "outputOnlyOnStateChange": true,
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": false,
+        "ignoreCurrentStateUnavailable": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "$boolean(payload = \"on\")",
+                "valueType": "jsonata"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            },
+            {
+                "property": "forcechargePM1",
+                "propertyType": "global",
+                "value": "$boolean(payload = \"on\")",
+                "valueType": "jsonata"
+            }
+        ],
+        "x": 430,
+        "y": 480,
+        "wires": [
+            [
+                "aaa35f7148e8472b"
+            ]
+        ]
+    },
+    {
+        "id": "f3600e3a00d6f368",
+        "type": "server-state-changed",
+        "z": "5f20dbf7637ea30d",
+        "name": "Force PM Charge2",
+        "server": "4b37cada.edd1b4",
+        "version": 5,
+        "outputs": 1,
+        "exposeAsEntityConfig": "",
+        "entityId": "input_boolean.force_charge_enable_pm2",
+        "entityIdType": "exact",
+        "outputInitially": true,
+        "stateType": "num",
+        "ifState": "",
+        "ifStateType": "num",
+        "ifStateOperator": "gte",
+        "outputOnlyOnStateChange": true,
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": false,
+        "ignoreCurrentStateUnavailable": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "$boolean(payload = \"on\")",
+                "valueType": "jsonata"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            },
+            {
+                "property": "forcechargePM2",
+                "propertyType": "global",
+                "value": "$boolean(payload = \"on\")",
+                "valueType": "jsonata"
+            }
+        ],
+        "x": 430,
+        "y": 520,
+        "wires": [
+            [
+                "aaa35f7148e8472b"
+            ]
+        ]
+    },
+    {
+        "id": "6cb73cce705ddf6f",
+        "type": "inject",
+        "z": "5f20dbf7637ea30d",
+        "name": "Once at 7.32",
+        "props": [],
+        "repeat": "",
+        "crontab": "32 07 * * *",
+        "once": true,
+        "onceDelay": "2",
+        "topic": "",
+        "x": 480,
+        "y": 740,
+        "wires": [
+            [
+                "f40b8ba1e9c3721f"
+            ]
+        ]
+    },
+    {
+        "id": "a319d0e4bf1082f8",
+        "type": "time-range-switch",
+        "z": "5f20dbf7637ea30d",
+        "name": "",
+        "lat": "",
+        "lon": "",
+        "startTime": "12:00",
+        "endTime": "14:50",
+        "startOffset": 0,
+        "endOffset": 0,
+        "x": 1410,
+        "y": 580,
+        "wires": [
+            [
+                "44960d37025654c1"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "4b37cada.edd1b4",
+        "type": "server",
+        "name": "Home Assistant",
+        "addon": true
+    },
+    {
+        "id": "home_assistant",
+        "type": "server",
+        "name": "Home Assistant",
+        "addon": true
+    }
+]
